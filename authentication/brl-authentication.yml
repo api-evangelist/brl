@@ -1,0 +1,63 @@
+generated: '2026-07-18'
+method: searched
+source: openapi/brl-openapi-original.json
+docs: https://docs.crown-brlv.com/guides/authentication
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+  model: >-
+    Every authenticated request carries BOTH an X-API-Key header (the API key
+    identifier) AND a short-lived, self-signed RS256 JWT in the Authorization:
+    Bearer header. Crown does NOT issue tokens from a token endpoint — the
+    partner mints and signs the JWT locally with its private key. Webhook
+    deliveries are authenticated separately with an X-Crown-Signature HMAC.
+schemes:
+- name: JwtAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: >-
+    Self-signed, per-request JWT. Signed with the partner's private key using
+    RS256 and sent as `Authorization: Bearer <jwt>`. Expiry must be within 50
+    seconds of issuance (exp - iat <= 50s). Required claims bind the token to a
+    single request.
+  jwt_claims:
+    uri: The endpoint path being accessed
+    nonce: Unique per-request identifier (replay protection)
+    iat: Unix timestamp of token creation
+    exp: Unix timestamp of expiry (<= iat + 50s)
+    sub: The API key identifier
+    bodyHash: SHA-256 hash of the request body
+  algorithm: RS256
+  max_lifetime_seconds: 50
+  sources:
+  - openapi/brl-openapi-original.json
+  - https://docs.crown-brlv.com/guides/authentication
+- name: ApiKey
+  type: apiKey
+  in: header
+  parameter: X-API-Key
+  description: The account API key identifier, created via the API Keys Setup guide. Sent alongside the JWT on every request.
+  docs: https://docs.crown-brlv.com/guides/api-keys-setup
+  sources:
+  - openapi/brl-openapi-original.json
+  - https://docs.crown-brlv.com/guides/authentication
+- name: signature
+  type: apiKey
+  in: header
+  parameter: X-Crown-Signature
+  description: >-
+    Webhook authentication only. HMAC-SHA256 signature of the request body
+    computed with the account's webhook secret; verify it to confirm a webhook
+    was sent by Crown.
+  scope: webhooks
+  sources:
+  - openapi/brl-openapi-original.json
+capabilities_note: >-
+  Authorization within an account is capability-scoped rather than OAuth-scoped:
+  operations require account capabilities such as `manage-holders` (sub-account
+  management) and `auto-claim-rewards` (recurring reward claims). These are
+  account grants, not OAuth2 scopes, so no scopes/ artifact is emitted.
