@@ -1,0 +1,943 @@
+openapi: 3.1.0
+info:
+  title: Crown API & Webhooks Accounts Withdrawals API
+  version: 1.0.0
+  description: 'Open API 3 docs for Crown API
+
+
+    Webhook events that Crown will POST to your configured endpoint URL. All webhooks expect a 200 OK response. Payloads use kebab-case for all keys to match the Crown API conventions.'
+servers:
+- url: https://app.crown-brlv.com
+  description: Production server
+tags:
+- name: Withdrawals
+paths:
+  /api/v0/withdrawals/{id}:
+    get:
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Withdrawal retrieved successfully
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      example: 660e8400-e29b-41d4-a716-446655440001
+                    asset:
+                      enum:
+                      - fiat/brl
+                      example: fiat/brl
+                    amount:
+                      type: string
+                      format: decimal
+                      example: '100.50'
+                    method:
+                      enum:
+                      - pix
+                      example: pix
+                    state:
+                      type: string
+                      enum:
+                      - created
+                      - rolled-back
+                      - completed
+                      - processing
+                      example: created
+                    created-at:
+                      type: string
+                      example: '2025-03-06T10:30:00Z'
+                      format: date-time
+                    state-updated-at:
+                      type: string
+                      example: '2025-03-06T10:30:00Z'
+                      format: date-time
+                  additionalProperties: false
+                  required:
+                  - id
+                  - asset
+                  - amount
+                  - method
+                  - state
+                  - created-at
+                  - state-updated-at
+                  description: BRL PIX withdrawal
+                  title: PIX Withdrawal
+                - type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      example: 660e8400-e29b-41d4-a716-446655440002
+                    asset:
+                      enum:
+                      - fiat/brl
+                      example: fiat/brl
+                    amount:
+                      type: string
+                      format: decimal
+                      example: '1500.00'
+                    method:
+                      enum:
+                      - ted
+                      example: ted
+                    state:
+                      type: string
+                      enum:
+                      - created
+                      - rolled-back
+                      - completed
+                      - processing
+                      example: created
+                    created-at:
+                      type: string
+                      example: '2025-03-06T10:30:00Z'
+                      format: date-time
+                    state-updated-at:
+                      type: string
+                      example: '2025-03-06T10:30:00Z'
+                      format: date-time
+                  additionalProperties: false
+                  required:
+                  - id
+                  - asset
+                  - amount
+                  - method
+                  - state
+                  - created-at
+                  - state-updated-at
+                  description: BRL TED withdrawal
+                  title: TED Withdrawal
+                - type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      example: 660e8400-e29b-41d4-a716-446655440003
+                    asset:
+                      type: string
+                      enum:
+                      - eth-mainnet/usdc
+                      - eth-base/usdc
+                      description: Stablecoin asset
+                      example: eth-base/usdc
+                    amount:
+                      type: string
+                      format: decimal
+                      example: '100.500000000000000000'
+                    state:
+                      type: string
+                      enum:
+                      - created
+                      - rolled-back
+                      - completed
+                      - processing
+                      example: created
+                    created-at:
+                      type: string
+                      example: '2025-03-06T10:30:00Z'
+                      format: date-time
+                    state-updated-at:
+                      type: string
+                      example: '2025-03-06T10:30:00Z'
+                      format: date-time
+                    destination-wallet-address:
+                      type: string
+                      description: Destination wallet address
+                      example: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e'
+                    tx-hash:
+                      type: string
+                      description: Transaction hash for completed withdrawal
+                      example: 0x1234567890abcdef...
+                  additionalProperties: false
+                  required:
+                  - id
+                  - asset
+                  - amount
+                  - state
+                  - created-at
+                  - state-updated-at
+                  description: Crypto stablecoin withdrawal
+                  title: Stablecoin Withdrawal
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Bad request error details
+                additionalProperties: false
+                required:
+                - error
+        '403':
+          description: Forbidden - Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Forbidden access error details
+                additionalProperties: false
+                required:
+                - error
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Resource not found error details
+                additionalProperties: false
+                required:
+                - error
+        '422':
+          description: Unprocessable entity - Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Validation error details
+                additionalProperties: false
+                required:
+                - error
+      summary: Get a withdrawal by ID
+      description: Retrieves details of a specific withdrawal
+      tags:
+      - Withdrawals
+  /api/v0/withdrawals:
+    get:
+      parameters:
+      - in: query
+        name: asset
+        required: false
+        schema:
+          type: string
+          enum:
+          - tempo/brlv
+          - eth-base/brlv
+          - eth-mainnet/brlv
+          - fiat/brl
+          - eth-base/usdt
+          - fiat/usd
+          - eth-mainnet/usdt
+          - eth-mainnet/usdc
+          - eth-base/wbrly
+          - eth-base/usdc
+          - eth-base/brly
+        description: Filter by asset
+      responses:
+        '200':
+          description: Withdrawals retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  withdrawals:
+                    type: array
+                    items:
+                      oneOf:
+                      - type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                            example: 660e8400-e29b-41d4-a716-446655440001
+                          asset:
+                            enum:
+                            - fiat/brl
+                            example: fiat/brl
+                          amount:
+                            type: string
+                            format: decimal
+                            example: '100.50'
+                          method:
+                            enum:
+                            - pix
+                            example: pix
+                          state:
+                            type: string
+                            enum:
+                            - created
+                            - rolled-back
+                            - completed
+                            - processing
+                            example: created
+                          created-at:
+                            type: string
+                            example: '2025-03-06T10:30:00Z'
+                            format: date-time
+                          state-updated-at:
+                            type: string
+                            example: '2025-03-06T10:30:00Z'
+                            format: date-time
+                        additionalProperties: false
+                        required:
+                        - id
+                        - asset
+                        - amount
+                        - method
+                        - state
+                        - created-at
+                        - state-updated-at
+                        description: BRL PIX withdrawal
+                        title: PIX Withdrawal
+                      - type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                            example: 660e8400-e29b-41d4-a716-446655440002
+                          asset:
+                            enum:
+                            - fiat/brl
+                            example: fiat/brl
+                          amount:
+                            type: string
+                            format: decimal
+                            example: '1500.00'
+                          method:
+                            enum:
+                            - ted
+                            example: ted
+                          state:
+                            type: string
+                            enum:
+                            - created
+                            - rolled-back
+                            - completed
+                            - processing
+                            example: created
+                          created-at:
+                            type: string
+                            example: '2025-03-06T10:30:00Z'
+                            format: date-time
+                          state-updated-at:
+                            type: string
+                            example: '2025-03-06T10:30:00Z'
+                            format: date-time
+                        additionalProperties: false
+                        required:
+                        - id
+                        - asset
+                        - amount
+                        - method
+                        - state
+                        - created-at
+                        - state-updated-at
+                        description: BRL TED withdrawal
+                        title: TED Withdrawal
+                      - type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                            example: 660e8400-e29b-41d4-a716-446655440003
+                          asset:
+                            type: string
+                            enum:
+                            - eth-mainnet/usdc
+                            - eth-base/usdc
+                            description: Stablecoin asset
+                            example: eth-base/usdc
+                          amount:
+                            type: string
+                            format: decimal
+                            example: '100.500000000000000000'
+                          state:
+                            type: string
+                            enum:
+                            - created
+                            - rolled-back
+                            - completed
+                            - processing
+                            example: created
+                          created-at:
+                            type: string
+                            example: '2025-03-06T10:30:00Z'
+                            format: date-time
+                          state-updated-at:
+                            type: string
+                            example: '2025-03-06T10:30:00Z'
+                            format: date-time
+                          destination-wallet-address:
+                            type: string
+                            description: Destination wallet address
+                            example: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e'
+                          tx-hash:
+                            type: string
+                            description: Transaction hash for completed withdrawal
+                            example: 0x1234567890abcdef...
+                        additionalProperties: false
+                        required:
+                        - id
+                        - asset
+                        - amount
+                        - state
+                        - created-at
+                        - state-updated-at
+                        description: Crypto stablecoin withdrawal
+                        title: Stablecoin Withdrawal
+                      description: List of withdrawals (BRL PIX, BRL TED, or tokens)
+                additionalProperties: false
+                required:
+                - withdrawals
+                title: Withdrawals
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Bad request error details
+                additionalProperties: false
+                required:
+                - error
+        '403':
+          description: Forbidden - Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Forbidden access error details
+                additionalProperties: false
+                required:
+                - error
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Resource not found error details
+                additionalProperties: false
+                required:
+                - error
+        '422':
+          description: Unprocessable entity - Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Validation error details
+                additionalProperties: false
+                required:
+                - error
+      summary: List withdrawals
+      description: Lists all withdrawals for the authenticated account
+      tags:
+      - Withdrawals
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - type: object
+                properties:
+                  asset:
+                    enum:
+                    - fiat/brl
+                    example: fiat/brl
+                  method:
+                    enum:
+                    - pix
+                    example: pix
+                  amount:
+                    oneOf:
+                    - type: string
+                    - type: number
+                      format: double
+                  pix-key:
+                    type: string
+                    description: PIX key
+                    example: user@example.com
+                additionalProperties: false
+                required:
+                - asset
+                - method
+                - amount
+                - pix-key
+                description: BRL PIX withdrawal
+                title: PIX Withdrawal
+              - type: object
+                properties:
+                  asset:
+                    enum:
+                    - fiat/brl
+                    example: fiat/brl
+                  method:
+                    enum:
+                    - ted
+                    example: ted
+                  amount:
+                    oneOf:
+                    - type: string
+                    - type: number
+                      format: double
+                  bank-code:
+                    type: string
+                  branch-number:
+                    type: string
+                  account-number:
+                    type: string
+                  account-holder-name:
+                    type: string
+                  account-holder-tax-id:
+                    oneOf:
+                    - type: string
+                    - type: string
+                additionalProperties: false
+                required:
+                - asset
+                - method
+                - amount
+                - bank-code
+                - branch-number
+                - account-number
+                - account-holder-name
+                - account-holder-tax-id
+                description: BRL TED withdrawal
+                title: TED Withdrawal
+              - type: object
+                properties:
+                  asset:
+                    type: string
+                    enum:
+                    - eth-mainnet/usdc
+                    - eth-base/usdc
+                    description: Stablecoin asset
+                    example: eth-base/usdc
+                  amount:
+                    oneOf:
+                    - type: string
+                    - type: number
+                      format: double
+                  destination-wallet-address:
+                    type: string
+                    description: External wallet address
+                    example: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e'
+                additionalProperties: false
+                required:
+                - asset
+                - amount
+                - destination-wallet-address
+                description: Crypto stablecoin withdrawal
+                title: Stablecoin Withdrawal
+      responses:
+        '200':
+          description: Withdrawal created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  withdrawal:
+                    oneOf:
+                    - type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          example: 660e8400-e29b-41d4-a716-446655440001
+                        asset:
+                          enum:
+                          - fiat/brl
+                          example: fiat/brl
+                        amount:
+                          type: string
+                          format: decimal
+                          example: '100.50'
+                        method:
+                          enum:
+                          - pix
+                          example: pix
+                        state:
+                          type: string
+                          enum:
+                          - created
+                          - rolled-back
+                          - completed
+                          - processing
+                          example: created
+                        created-at:
+                          type: string
+                          example: '2025-03-06T10:30:00Z'
+                          format: date-time
+                        state-updated-at:
+                          type: string
+                          example: '2025-03-06T10:30:00Z'
+                          format: date-time
+                      additionalProperties: false
+                      required:
+                      - id
+                      - asset
+                      - amount
+                      - method
+                      - state
+                      - created-at
+                      - state-updated-at
+                      description: BRL PIX withdrawal
+                      title: PIX Withdrawal
+                    - type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          example: 660e8400-e29b-41d4-a716-446655440002
+                        asset:
+                          enum:
+                          - fiat/brl
+                          example: fiat/brl
+                        amount:
+                          type: string
+                          format: decimal
+                          example: '1500.00'
+                        method:
+                          enum:
+                          - ted
+                          example: ted
+                        state:
+                          type: string
+                          enum:
+                          - created
+                          - rolled-back
+                          - completed
+                          - processing
+                          example: created
+                        created-at:
+                          type: string
+                          example: '2025-03-06T10:30:00Z'
+                          format: date-time
+                        state-updated-at:
+                          type: string
+                          example: '2025-03-06T10:30:00Z'
+                          format: date-time
+                      additionalProperties: false
+                      required:
+                      - id
+                      - asset
+                      - amount
+                      - method
+                      - state
+                      - created-at
+                      - state-updated-at
+                      description: BRL TED withdrawal
+                      title: TED Withdrawal
+                    - type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          example: 660e8400-e29b-41d4-a716-446655440003
+                        asset:
+                          type: string
+                          enum:
+                          - eth-mainnet/usdc
+                          - eth-base/usdc
+                          description: Stablecoin asset
+                          example: eth-base/usdc
+                        amount:
+                          type: string
+                          format: decimal
+                          example: '100.500000000000000000'
+                        state:
+                          type: string
+                          enum:
+                          - created
+                          - rolled-back
+                          - completed
+                          - processing
+                          example: created
+                        created-at:
+                          type: string
+                          example: '2025-03-06T10:30:00Z'
+                          format: date-time
+                        state-updated-at:
+                          type: string
+                          example: '2025-03-06T10:30:00Z'
+                          format: date-time
+                        destination-wallet-address:
+                          type: string
+                          description: Destination wallet address
+                          example: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e'
+                        tx-hash:
+                          type: string
+                          description: Transaction hash for completed withdrawal
+                          example: 0x1234567890abcdef...
+                      additionalProperties: false
+                      required:
+                      - id
+                      - asset
+                      - amount
+                      - state
+                      - created-at
+                      - state-updated-at
+                      description: Crypto stablecoin withdrawal
+                      title: Stablecoin Withdrawal
+                additionalProperties: false
+                required:
+                - withdrawal
+                title: Create Withdrawal Response
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Bad request error details
+                additionalProperties: false
+                required:
+                - error
+        '403':
+          description: Forbidden - Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Forbidden access error details
+                additionalProperties: false
+                required:
+                - error
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Resource not found error details
+                additionalProperties: false
+                required:
+                - error
+        '422':
+          description: Unprocessable entity - Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Validation error details
+                additionalProperties: false
+                required:
+                - error
+      summary: Create a withdrawal
+      description: Creates a withdrawal for fiat (PIX/TED) or tokens. For fiat BRL, use asset 'fiat/brl' with method 'pix' or 'ted'. For tokens, use asset like 'eth-base/usdc' with method 'token'.
+      tags:
+      - Withdrawals
+components:
+  securitySchemes:
+    JwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT-based authentication.
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Your account API Key
+    signature:
+      type: apiKey
+      in: header
+      name: X-Crown-Signature
+      description: HMAC-SHA256 signature of the request body using your webhook secret. Verify this signature to ensure the webhook is from Crown.
+x-webhook-security:
+  note: All webhook requests include an X-Crown-Signature header containing an HMAC-SHA256 signature of the request body. Use your webhook secret (provided when registering the webhook) to verify the signature and ensure the request is authentic.
+  algorithm: HMAC-SHA256
+  header: X-Crown-Signature
+  verification-steps:
+  - 1. Extract the X-Crown-Signature header from the request
+  - 2. Compute HMAC-SHA256 of the raw request body using your webhook secret
+  - 3. Compare the computed signature with the header value
+  - 4. Only process the webhook if signatures match
+  example-code:
+    node-js: "const crypto = require('crypto');\nconst signature = crypto.createHmac('sha256', webhookSecret)\n  .update(JSON.stringify(requestBody))\n  .digest('hex');\nconst isValid = signature === req.headers['x-crown-signature'];"
+    python: "import hmac\nimport hashlib\nimport json\n\nsignature = hmac.new(\n    webhook_secret.encode('utf-8'),\n    json.dumps(request_body).encode('utf-8'),\n    hashlib.sha256\n).hexdigest()\nis_valid = signature == request.headers['x-crown-signature']"

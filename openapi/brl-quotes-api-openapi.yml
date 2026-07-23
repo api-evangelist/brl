@@ -1,0 +1,466 @@
+openapi: 3.1.0
+info:
+  title: Crown API & Webhooks Accounts Quotes API
+  version: 1.0.0
+  description: 'Open API 3 docs for Crown API
+
+
+    Webhook events that Crown will POST to your configured endpoint URL. All webhooks expect a 200 OK response. Payloads use kebab-case for all keys to match the Crown API conventions.'
+servers:
+- url: https://app.crown-brlv.com
+  description: Production server
+tags:
+- name: Quotes
+paths:
+  /api/v0/quotes:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                source-asset:
+                  type: string
+                  enum:
+                  - tempo/brlv
+                  - eth-base/brlv
+                  - eth-mainnet/brlv
+                  - fiat/brl
+                  - eth-base/usdt
+                  - fiat/usd
+                  - eth-mainnet/usdt
+                  - eth-mainnet/usdc
+                  - eth-base/wbrly
+                  - eth-base/usdc
+                  - eth-base/brly
+                  description: The asset to convert from (e.g., 'fiat/brl', 'eth-base/brlv', 'eth-base/usdc')
+                  example: fiat/brl
+                target-asset:
+                  type: string
+                  enum:
+                  - tempo/brlv
+                  - eth-base/brlv
+                  - eth-mainnet/brlv
+                  - fiat/brl
+                  - eth-base/usdt
+                  - fiat/usd
+                  - eth-mainnet/usdt
+                  - eth-mainnet/usdc
+                  - eth-base/wbrly
+                  - eth-base/usdc
+                  - eth-base/brly
+                  description: The asset to convert to (e.g., 'fiat/brl', 'eth-base/brlv', 'eth-base/usdc')
+                  example: eth-base/usdc
+                source-amount:
+                  oneOf:
+                  - oneOf:
+                    - type: string
+                    - type: number
+                      format: double
+                    description: Amount of source asset to convert (provide either source-amount OR target-amount, not both)
+                    example: '100.50'
+                  - type: 'null'
+                target-amount:
+                  oneOf:
+                  - oneOf:
+                    - type: string
+                    - type: number
+                      format: double
+                    description: Desired amount of target asset to receive (provide either source-amount OR target-amount, not both)
+                    example: '500.25'
+                  - type: 'null'
+                trade-reason:
+                  oneOf:
+                  - type: string
+                    enum:
+                    - transfer-between-same-entity-accounts
+                    description: SISBACEN classification for the FX trade. Required when converting between BRL and a non-BRL-pegged asset (e.g., BRL <-> USDC). Ignored for same-currency conversions such as BRL <-> BRLV.
+                    example: transfer-between-same-entity-accounts
+                  - type: 'null'
+              additionalProperties: false
+              required:
+              - source-asset
+              - target-asset
+      responses:
+        '200':
+          description: Quote created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  expires-at:
+                    type: string
+                    example: '2024-01-15T10:30:00Z'
+                    format: date-time
+                    description: ISO 8601 timestamp when the quote expires (millisecond precision)
+                  trade-reason-code:
+                    type: string
+                    description: Regulatory code for the trade reason
+                    example: '67995'
+                  target-asset:
+                    type: string
+                    enum:
+                    - tempo/brlv
+                    - eth-base/brlv
+                    - eth-mainnet/brlv
+                    - fiat/brl
+                    - eth-base/usdt
+                    - fiat/usd
+                    - eth-mainnet/usdt
+                    - eth-mainnet/usdc
+                    - eth-base/wbrly
+                    - eth-base/usdc
+                    - eth-base/brly
+                    description: The asset being converted to
+                    example: eth-base/usdc
+                  id:
+                    type: string
+                    format: uuid
+                    description: Unique identifier for the quote
+                    example: 550e8400-e29b-41d4-a716-446655440000
+                  trade-reason:
+                    type: string
+                    enum:
+                    - transfer-between-same-entity-accounts
+                    description: SISBACEN classification for the FX trade
+                    example: transfer-between-same-entity-accounts
+                  source-asset:
+                    type: string
+                    enum:
+                    - tempo/brlv
+                    - eth-base/brlv
+                    - eth-mainnet/brlv
+                    - fiat/brl
+                    - eth-base/usdt
+                    - fiat/usd
+                    - eth-mainnet/usdt
+                    - eth-mainnet/usdc
+                    - eth-base/wbrly
+                    - eth-base/usdc
+                    - eth-base/brly
+                    description: The asset being converted from
+                    example: fiat/brl
+                  source-amount:
+                    type: string
+                    format: decimal
+                    description: Amount of source asset to be converted. BRL → 2 dp; USDC/USDT → 6 dp. Always FLOOR-truncated.
+                    example: '1000.00'
+                  created-at:
+                    type: string
+                    example: '2024-01-15T10:30:00Z'
+                    format: date-time
+                    description: ISO 8601 timestamp when the quote was created (millisecond precision)
+                  pricing:
+                    type: object
+                    properties:
+                      base-rate:
+                        type: object
+                        properties:
+                          amount:
+                            type: string
+                            format: decimal
+                            description: Units of quote asset per 1 unit of base asset (10-decimal precision, floored)
+                            example: '5.1307200000'
+                          base:
+                            type: string
+                            description: Base asset symbol
+                            example: USDC
+                          quote:
+                            type: string
+                            description: Quote asset symbol
+                            example: BRL
+                        additionalProperties: false
+                        required:
+                        - amount
+                        - base
+                        - quote
+                        description: Commercial exchange rate, before Crown's spread
+                      spread:
+                        type: object
+                        properties:
+                          amount:
+                            type: string
+                            format: decimal
+                            description: Crown's spread, charged in BRL (2-decimal, rounded UP to the next centavo)
+                            example: '7.95'
+                          asset:
+                            type: string
+                            enum:
+                            - tempo/brlv
+                            - eth-base/brlv
+                            - eth-mainnet/brlv
+                            - fiat/brl
+                            - eth-base/usdt
+                            - fiat/usd
+                            - eth-mainnet/usdt
+                            - eth-mainnet/usdc
+                            - eth-base/wbrly
+                            - eth-base/usdc
+                            - eth-base/brly
+                            description: Asset in which the spread is charged
+                            example: fiat/brl
+                          bps:
+                            type: integer
+                            format: int32
+                            description: Spread rate in basis points; present only when the percentage branch of the brokerage formula wins
+                            example: 80
+                        additionalProperties: false
+                        required:
+                        - amount
+                        - asset
+                        description: Crown's spread on the conversion
+                      fee:
+                        type: object
+                        properties:
+                          amount:
+                            type: string
+                            format: decimal
+                            description: Service fee charged on the conversion (BRL, 2-decimal, rounded UP)
+                            example: '2.00'
+                          asset:
+                            type: string
+                            enum:
+                            - tempo/brlv
+                            - eth-base/brlv
+                            - eth-mainnet/brlv
+                            - fiat/brl
+                            - eth-base/usdt
+                            - fiat/usd
+                            - eth-mainnet/usdt
+                            - eth-mainnet/usdc
+                            - eth-base/wbrly
+                            - eth-base/usdc
+                            - eth-base/brly
+                            description: Asset in which the fee is charged
+                            example: fiat/brl
+                          kind:
+                            type: string
+                            enum:
+                            - fixed
+                            description: Fee structure kind
+                            example: fixed
+                        additionalProperties: false
+                        required:
+                        - amount
+                        - asset
+                        - kind
+                        description: Service fee charged on the conversion
+                      iof:
+                        type: object
+                        properties:
+                          amount:
+                            type: string
+                            format: decimal
+                            description: IOF (Imposto sobre Operações Financeiras) amount (BRL, 2-decimal, rounded UP)
+                            example: '0.00'
+                          asset:
+                            type: string
+                            enum:
+                            - tempo/brlv
+                            - eth-base/brlv
+                            - eth-mainnet/brlv
+                            - fiat/brl
+                            - eth-base/usdt
+                            - fiat/usd
+                            - eth-mainnet/usdt
+                            - eth-mainnet/usdc
+                            - eth-base/wbrly
+                            - eth-base/usdc
+                            - eth-base/brly
+                            description: Asset in which IOF is charged
+                            example: fiat/brl
+                          applicable:
+                            type: boolean
+                            description: Whether IOF applies to this conversion
+                            example: false
+                          basis-ref:
+                            type: string
+                            description: Reference to the regulatory basis for IOF treatment
+                            example: psav-res-521-2025
+                        additionalProperties: false
+                        required:
+                        - amount
+                        - asset
+                        - applicable
+                        - basis-ref
+                        description: IOF tax treatment for this conversion
+                    additionalProperties: false
+                    required:
+                    - base-rate
+                    - spread
+                    - fee
+                    - iof
+                    description: 'Pricing breakdown: base rate, spread, service fee, IOF'
+                  target-amount:
+                    type: string
+                    format: decimal
+                    description: Amount of target asset to be received. BRL → 2 dp; USDC/USDT → 6 dp. Always FLOOR-truncated.
+                    example: '194.914826'
+                  vet:
+                    type: object
+                    properties:
+                      amount:
+                        type: string
+                        format: decimal
+                        description: Units of quote asset per 1 unit of base asset (10-decimal precision, floored)
+                        example: '5.1307200000'
+                      base:
+                        type: string
+                        description: Base asset symbol
+                        example: USDC
+                      quote:
+                        type: string
+                        description: Quote asset symbol
+                        example: BRL
+                    additionalProperties: false
+                    required:
+                    - amount
+                    - base
+                    - quote
+                    description: Valor Efetivo Total — the all-in rate including spread, fee, and IOF
+                additionalProperties: false
+                required:
+                - expires-at
+                - target-asset
+                - id
+                - source-asset
+                - source-amount
+                - created-at
+                - pricing
+                - target-amount
+                - vet
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Bad request error details
+                additionalProperties: false
+                required:
+                - error
+        '403':
+          description: Forbidden - Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Forbidden access error details
+                additionalProperties: false
+                required:
+                - error
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Resource not found error details
+                additionalProperties: false
+                required:
+                - error
+        '422':
+          description: Unprocessable entity - Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Validation error details
+                additionalProperties: false
+                required:
+                - error
+      summary: Create a quote for currency/token conversion
+      description: Creates a quote for converting between different assets (fiat currencies and tokens). Either source-amount OR target-amount must be provided, but not both.
+      tags:
+      - Quotes
+components:
+  securitySchemes:
+    JwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT-based authentication.
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Your account API Key
+    signature:
+      type: apiKey
+      in: header
+      name: X-Crown-Signature
+      description: HMAC-SHA256 signature of the request body using your webhook secret. Verify this signature to ensure the webhook is from Crown.
+x-webhook-security:
+  note: All webhook requests include an X-Crown-Signature header containing an HMAC-SHA256 signature of the request body. Use your webhook secret (provided when registering the webhook) to verify the signature and ensure the request is authentic.
+  algorithm: HMAC-SHA256
+  header: X-Crown-Signature
+  verification-steps:
+  - 1. Extract the X-Crown-Signature header from the request
+  - 2. Compute HMAC-SHA256 of the raw request body using your webhook secret
+  - 3. Compare the computed signature with the header value
+  - 4. Only process the webhook if signatures match
+  example-code:
+    node-js: "const crypto = require('crypto');\nconst signature = crypto.createHmac('sha256', webhookSecret)\n  .update(JSON.stringify(requestBody))\n  .digest('hex');\nconst isValid = signature === req.headers['x-crown-signature'];"
+    python: "import hmac\nimport hashlib\nimport json\n\nsignature = hmac.new(\n    webhook_secret.encode('utf-8'),\n    json.dumps(request_body).encode('utf-8'),\n    hashlib.sha256\n).hexdigest()\nis_valid = signature == request.headers['x-crown-signature']"

@@ -1,0 +1,1087 @@
+openapi: 3.1.0
+info:
+  title: Crown API & Webhooks Accounts Wallets API
+  version: 1.0.0
+  description: 'Open API 3 docs for Crown API
+
+
+    Webhook events that Crown will POST to your configured endpoint URL. All webhooks expect a 200 OK response. Payloads use kebab-case for all keys to match the Crown API conventions.'
+servers:
+- url: https://app.crown-brlv.com
+  description: Production server
+tags:
+- name: Wallets
+paths:
+  /api/v0/wallets/{wallet-address}/claims:
+    get:
+      parameters:
+      - in: path
+        name: wallet-address
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Claimable balance retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  available-balance:
+                    type: string
+                    format: decimal
+                    description: Total available balance that can be claimed
+                    example: '350.50'
+                additionalProperties: false
+                required:
+                - available-balance
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Bad request error details
+                additionalProperties: false
+                required:
+                - error
+        '403':
+          description: Forbidden - Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Forbidden access error details
+                additionalProperties: false
+                required:
+                - error
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Resource not found error details
+                additionalProperties: false
+                required:
+                - error
+        '422':
+          description: Unprocessable entity - Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Validation error details
+                additionalProperties: false
+                required:
+                - error
+      summary: Get claimable balance for a wallet
+      description: Returns the available balance that can be claimed from reward certificates held by the given wallet address.
+      tags:
+      - Wallets
+    post:
+      parameters:
+      - in: path
+        name: wallet-address
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  oneOf:
+                  - type: string
+                  - type: number
+                    format: double
+                  description: Amount to claim from reward certificates
+                  example: '100.00'
+                target-asset-code:
+                  type: string
+                  description: 'Destination asset: ''brl'' for bank transfer or ''brlv'' for on-chain tokens'
+                  example: brlv
+                  enum:
+                  - brl
+                  - brlv
+              additionalProperties: false
+              required:
+              - amount
+      responses:
+        '200':
+          description: Claim submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  claim:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: Claims request unique identifier
+                        example: 550e8400-e29b-41d4-a716-446655440003
+                      gross-amount:
+                        type: string
+                        format: decimal
+                        description: Total gross amount of the claims
+                        example: '100.00'
+                      net-amount:
+                        type: string
+                        format: decimal
+                        description: Net amount after taxes and fees
+                        example: '85.00'
+                      tax-amount:
+                        type: string
+                        format: decimal
+                        description: Total tax amount deducted
+                        example: '15.00'
+                      fees:
+                        type: string
+                        format: decimal
+                        description: Processing fees
+                        example: '0.00'
+                      status:
+                        type: string
+                        enum:
+                        - created
+                        - failed
+                        - completed
+                        - processing
+                        - canceled
+                        description: Current status of the claims request
+                        example: created
+                      updated-at:
+                        type: string
+                        description: Last update timestamp
+                        example: '2025-09-30T19:21:57.838913Z'
+                    additionalProperties: false
+                    required:
+                    - id
+                    - gross-amount
+                    - net-amount
+                    - tax-amount
+                    - fees
+                    - status
+                    - updated-at
+                    description: Details of the submitted claim request
+                additionalProperties: false
+                required:
+                - claim
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Bad request error details
+                additionalProperties: false
+                required:
+                - error
+        '403':
+          description: Forbidden - Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Forbidden access error details
+                additionalProperties: false
+                required:
+                - error
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Resource not found error details
+                additionalProperties: false
+                required:
+                - error
+        '422':
+          description: Unprocessable entity - Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Validation error details
+                additionalProperties: false
+                required:
+                - error
+      summary: Submit a claim request for a wallet
+      description: Submits a claim for a specified amount from reward certificates held by the given wallet address. FIFO allocation is restricted to certificates at this wallet.
+      tags:
+      - Wallets
+  /api/v0/wallets:
+    get:
+      parameters:
+      - in: query
+        name: assets
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - tempo/brlv
+            - eth-base/brlv
+            - eth-mainnet/brlv
+            - fiat/brl
+            - eth-base/usdt
+            - fiat/usd
+            - eth-mainnet/usdt
+            - eth-mainnet/usdc
+            - eth-base/wbrly
+            - eth-base/usdc
+            - eth-base/brly
+          example:
+          - eth-base/brlv
+          - eth-base/wbrly
+          - eth-base/eth-mainnet
+        description: Filter wallets by asset types
+      - in: query
+        name: addresses
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          example:
+          - '0x1234567890abcdef1234567890abcdef12345678'
+        description: Filter wallets by specific addresses
+      responses:
+        '200':
+          description: Wallets list retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  wallets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: Name of the wallet
+                          example: My Trading Wallet
+                        address:
+                          type: string
+                          description: Ethereum wallet address
+                          example: '0x1234567890abcdef1234567890abcdef12345678'
+                        assets:
+                          type: array
+                          items:
+                            type: string
+                            enum:
+                            - tempo/brlv
+                            - eth-base/brlv
+                            - eth-mainnet/brlv
+                            - fiat/brl
+                            - eth-base/usdt
+                            - fiat/usd
+                            - eth-mainnet/usdt
+                            - eth-mainnet/usdc
+                            - eth-base/wbrly
+                            - eth-base/usdc
+                            - eth-base/brly
+                          description: List of assets supported by this wallet
+                          example:
+                          - eth-base/brlv
+                          - eth-base/wbrly
+                        metadata:
+                          oneOf:
+                          - type: object
+                            additionalProperties: {}
+                          - type: 'null'
+                          description: Custom metadata associated with this wallet
+                          example:
+                            label: treasury
+                        ui-enabled:
+                          type: boolean
+                          description: Whether this wallet is visible in the UI
+                          example: true
+                      additionalProperties: false
+                      required:
+                      - name
+                      - address
+                      - assets
+                      - ui-enabled
+                    description: List of wallets
+                additionalProperties: false
+                required:
+                - wallets
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Bad request error details
+                additionalProperties: false
+                required:
+                - error
+        '403':
+          description: Forbidden - Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Forbidden access error details
+                additionalProperties: false
+                required:
+                - error
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Resource not found error details
+                additionalProperties: false
+                required:
+                - error
+        '422':
+          description: Unprocessable entity - Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Validation error details
+                additionalProperties: false
+                required:
+                - error
+      summary: List wallets
+      description: Returns a list of wallets. Can be filtered by assets and/or addresses.
+      tags:
+      - Wallets
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                wallet-name:
+                  type: string
+                  description: Name for the new wallet
+                  example: My Trading Wallet
+                chain:
+                  type: string
+                  enum:
+                  - tempo
+                  - eth-mainnet
+                  - eth-base
+                  description: Blockchain that this wallet will be supported on
+                  example: eth-base
+                metadata:
+                  oneOf:
+                  - type: object
+                    additionalProperties: {}
+                  - type: 'null'
+                  description: Custom metadata to associate with the wallet
+                  example:
+                    label: treasury
+                ui-enabled:
+                  type: boolean
+                  description: Whether this wallet should be visible in the UI (defaults to false)
+                  example: false
+              additionalProperties: false
+              required:
+              - wallet-name
+              - chain
+      responses:
+        '200':
+          description: Wallet created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  wallet:
+                    type: object
+                    properties:
+                      address:
+                        type: string
+                        description: Ethereum wallet address
+                        example: '0x1234567890abcdef1234567890abcdef12345678'
+                      assets:
+                        type: array
+                        items:
+                          type: string
+                          enum:
+                          - tempo/brlv
+                          - eth-base/brlv
+                          - eth-mainnet/brlv
+                          - fiat/brl
+                          - eth-base/usdt
+                          - fiat/usd
+                          - eth-mainnet/usdt
+                          - eth-mainnet/usdc
+                          - eth-base/wbrly
+                          - eth-base/usdc
+                          - eth-base/brly
+                        description: List of supported assets for this wallet
+                        example:
+                        - eth-base/brlv
+                        - eth-base/wbrly
+                    additionalProperties: false
+                    required:
+                    - address
+                    - assets
+                additionalProperties: false
+                required:
+                - wallet
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Bad request error details
+                additionalProperties: false
+                required:
+                - error
+        '403':
+          description: Forbidden - Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Forbidden access error details
+                additionalProperties: false
+                required:
+                - error
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Resource not found error details
+                additionalProperties: false
+                required:
+                - error
+        '422':
+          description: Unprocessable entity - Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Validation error details
+                additionalProperties: false
+                required:
+                - error
+      summary: Create a new wallet
+      description: Creates a new wallet with the specified name and default assets (BRLV and wBRLY if applicable).
+      tags:
+      - Wallets
+  /api/v0/wallets/{wallet-id}/metadata:
+    patch:
+      parameters:
+      - in: path
+        name: wallet-id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                metadata:
+                  oneOf:
+                  - type: object
+                    additionalProperties: {}
+                  - type: 'null'
+                  description: Custom metadata to associate with the wallet
+                  example:
+                    label: treasury
+                ui-enabled:
+                  type: boolean
+                  description: Whether this wallet should be visible in the UI
+                  example: true
+              additionalProperties: false
+      responses:
+        '200':
+          description: Wallet metadata updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  wallet:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: Wallet ID
+                        example: 019712cf-c86d-703f-85b8-bdaa4fc8d254
+                      name:
+                        type: string
+                        description: Name of the wallet
+                        example: My Trading Wallet
+                      address:
+                        type: string
+                        description: Ethereum wallet address
+                        example: '0x1234567890abcdef1234567890abcdef12345678'
+                      ui-enabled:
+                        type: boolean
+                        description: Whether this wallet is visible in the UI
+                        example: true
+                      metadata:
+                        oneOf:
+                        - type: object
+                          additionalProperties: {}
+                        - type: 'null'
+                        description: Custom metadata associated with this wallet
+                        example:
+                          label: treasury
+                    additionalProperties: false
+                    required:
+                    - id
+                    - name
+                    - address
+                    - ui-enabled
+                additionalProperties: false
+                required:
+                - wallet
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Bad request error details
+                additionalProperties: false
+                required:
+                - error
+        '403':
+          description: Forbidden - Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Forbidden access error details
+                additionalProperties: false
+                required:
+                - error
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Resource not found error details
+                additionalProperties: false
+                required:
+                - error
+        '422':
+          description: Unprocessable entity - Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Validation error details
+                additionalProperties: false
+                required:
+                - error
+      summary: Update wallet metadata
+      description: Updates the metadata and/or UI visibility for a specific wallet owned by the authenticated user.
+      tags:
+      - Wallets
+  /api/v0/wallets/{wallet-address}/claims/certificates:
+    get:
+      parameters:
+      - in: path
+        name: wallet-address
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Claimable certificates retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  certificates:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        certificate-id:
+                          type: string
+                          format: uuid
+                          description: Reward certificate unique identifier
+                          example: 550e8400-e29b-41d4-a716-446655440010
+                        status:
+                          type: string
+                          enum:
+                          - accruing
+                          - frozen
+                          description: Current status of the certificate
+                          example: accruing
+                        claimable-amount:
+                          type: string
+                          format: decimal
+                          description: Amount currently claimable from this certificate
+                          example: '150.25'
+                      additionalProperties: false
+                      required:
+                      - certificate-id
+                      - status
+                      - claimable-amount
+                    description: List of reward certificates with claimable amounts
+                  total-claimable:
+                    type: string
+                    format: decimal
+                    description: Total claimable amount across all certificates
+                    example: '350.50'
+                additionalProperties: false
+                required:
+                - certificates
+                - total-claimable
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Bad request error details
+                additionalProperties: false
+                required:
+                - error
+        '403':
+          description: Forbidden - Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Forbidden access error details
+                additionalProperties: false
+                required:
+                - error
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Resource not found error details
+                additionalProperties: false
+                required:
+                - error
+        '422':
+          description: Unprocessable entity - Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Validation error details
+                additionalProperties: false
+                required:
+                - error
+      summary: List claimable reward certificates for a wallet
+      description: Returns the reward certificates with their claimable amounts for the given wallet address.
+      tags:
+      - Wallets
+components:
+  securitySchemes:
+    JwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT-based authentication.
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Your account API Key
+    signature:
+      type: apiKey
+      in: header
+      name: X-Crown-Signature
+      description: HMAC-SHA256 signature of the request body using your webhook secret. Verify this signature to ensure the webhook is from Crown.
+x-webhook-security:
+  note: All webhook requests include an X-Crown-Signature header containing an HMAC-SHA256 signature of the request body. Use your webhook secret (provided when registering the webhook) to verify the signature and ensure the request is authentic.
+  algorithm: HMAC-SHA256
+  header: X-Crown-Signature
+  verification-steps:
+  - 1. Extract the X-Crown-Signature header from the request
+  - 2. Compute HMAC-SHA256 of the raw request body using your webhook secret
+  - 3. Compare the computed signature with the header value
+  - 4. Only process the webhook if signatures match
+  example-code:
+    node-js: "const crypto = require('crypto');\nconst signature = crypto.createHmac('sha256', webhookSecret)\n  .update(JSON.stringify(requestBody))\n  .digest('hex');\nconst isValid = signature === req.headers['x-crown-signature'];"
+    python: "import hmac\nimport hashlib\nimport json\n\nsignature = hmac.new(\n    webhook_secret.encode('utf-8'),\n    json.dumps(request_body).encode('utf-8'),\n    hashlib.sha256\n).hexdigest()\nis_valid = signature == request.headers['x-crown-signature']"

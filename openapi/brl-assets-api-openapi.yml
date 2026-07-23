@@ -1,0 +1,1255 @@
+openapi: 3.1.0
+info:
+  title: Crown API & Webhooks Accounts Assets API
+  version: 1.0.0
+  description: 'Open API 3 docs for Crown API
+
+
+    Webhook events that Crown will POST to your configured endpoint URL. All webhooks expect a 200 OK response. Payloads use kebab-case for all keys to match the Crown API conventions.'
+servers:
+- url: https://app.crown-brlv.com
+  description: Production server
+tags:
+- name: Assets
+paths:
+  /api/v0/assets/{asset}/withdrawals/{id}:
+    get:
+      parameters:
+      - in: path
+        name: asset
+        required: true
+        schema:
+          type: string
+          enum:
+          - usdc
+          - usdt
+          - brl
+          - brly
+          - usd
+          - brlv
+          - wbrly
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Asset withdrawal retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  withdrawal:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: Unique identifier for the created withdrawal
+                        example: 660e8400-e29b-41d4-a716-446655440001
+                      amount:
+                        type: string
+                        format: decimal
+                        description: Amount in BRL being withdrawn
+                        example: '100.50'
+                      method:
+                        type: string
+                        enum:
+                        - ted
+                        - pix
+                        description: Withdrawal method (pix or ted)
+                        example: pix
+                      state:
+                        type: string
+                        enum:
+                        - created
+                        - rolled-back
+                        - completed
+                        - processing
+                        description: Current state of the withdrawal
+                        example: created
+                      created-at:
+                        type: string
+                        example: '2024-01-15T10:30:00Z'
+                        format: date-time
+                        description: ISO 8601 timestamp when the withdrawal was created
+                      state-updated-at:
+                        type: string
+                        example: '2024-01-15T10:30:00Z'
+                        format: date-time
+                        description: ISO 8601 timestamp when the withdrawal state was last updated
+                    additionalProperties: false
+                    required:
+                    - id
+                    - amount
+                    - method
+                    - state
+                    - created-at
+                    - state-updated-at
+                additionalProperties: false
+                required:
+                - withdrawal
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Bad request error details
+                additionalProperties: false
+                required:
+                - error
+        '403':
+          description: Forbidden - Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Forbidden access error details
+                additionalProperties: false
+                required:
+                - error
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Resource not found error details
+                additionalProperties: false
+                required:
+                - error
+        '422':
+          description: Unprocessable entity - Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Validation error details
+                additionalProperties: false
+                required:
+                - error
+      summary: 'DEPRECATED: Get a BRL withdrawal by ID'
+      description: 'DEPRECATED: Use /withdrawals/:id instead. Retrieves a specific BRL withdrawal by its ID for the authenticated account.'
+      tags:
+      - Assets
+  /api/v0/assets/{asset}/withdrawals:
+    get:
+      parameters:
+      - in: path
+        name: asset
+        required: true
+        schema:
+          type: string
+          enum:
+          - usdc
+          - usdt
+          - brl
+          - brly
+          - usd
+          - brlv
+          - wbrly
+      responses:
+        '200':
+          description: Asset withdrawals list retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  withdrawals:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: Unique identifier for the created withdrawal
+                          example: 660e8400-e29b-41d4-a716-446655440001
+                        amount:
+                          type: string
+                          format: decimal
+                          description: Amount in BRL being withdrawn
+                          example: '100.50'
+                        method:
+                          type: string
+                          enum:
+                          - ted
+                          - pix
+                          description: Withdrawal method (pix or ted)
+                          example: pix
+                        state:
+                          type: string
+                          enum:
+                          - created
+                          - rolled-back
+                          - completed
+                          - processing
+                          description: Current state of the withdrawal
+                          example: created
+                        created-at:
+                          type: string
+                          example: '2024-01-15T10:30:00Z'
+                          format: date-time
+                          description: ISO 8601 timestamp when the withdrawal was created
+                        state-updated-at:
+                          type: string
+                          example: '2024-01-15T10:30:00Z'
+                          format: date-time
+                          description: ISO 8601 timestamp when the withdrawal state was last updated
+                      additionalProperties: false
+                      required:
+                      - id
+                      - amount
+                      - method
+                      - state
+                      - created-at
+                      - state-updated-at
+                      description: List of withdrawals
+                additionalProperties: false
+                required:
+                - withdrawals
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Bad request error details
+                additionalProperties: false
+                required:
+                - error
+        '403':
+          description: Forbidden - Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Forbidden access error details
+                additionalProperties: false
+                required:
+                - error
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Resource not found error details
+                additionalProperties: false
+                required:
+                - error
+        '422':
+          description: Unprocessable entity - Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Validation error details
+                additionalProperties: false
+                required:
+                - error
+      summary: 'DEPRECATED: List BRL withdrawals by asset'
+      description: 'DEPRECATED: Use /withdrawals instead. Retrieves a list of all BRL withdrawals for the authenticated user.'
+      tags:
+      - Assets
+    post:
+      parameters:
+      - in: path
+        name: asset
+        required: true
+        schema:
+          type: string
+          enum:
+          - usdc
+          - usdt
+          - brl
+          - brly
+          - usd
+          - brlv
+          - wbrly
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                method:
+                  type: string
+                  enum:
+                  - ted
+                  - pix
+                  description: Withdrawal method. Must be either 'pix' or 'ted'
+                  example: pix
+                amount:
+                  oneOf:
+                  - type: string
+                  - type: number
+                    format: double
+                  description: Amount in BRL to withdraw
+                  example: '100.50'
+                pix-key:
+                  type: string
+                  description: PIX key (email, phone, CPF/CNPJ, or random key). Required when method is 'pix'
+                  example: user@example.com
+                bank-code:
+                  type: string
+                  description: 3-digit Brazilian bank code. Required when method is 'ted'
+                  example: '001'
+                branch-number:
+                  type: string
+                  description: 4-5 digit Brazilian branch number. Required when method is 'ted'
+                  example: '1234'
+                account-number:
+                  type: string
+                  description: Brazilian account number. Required when method is 'ted'
+                  example: '12345678'
+                account-holder-name:
+                  type: string
+                  description: Name of the account holder. Required when method is 'ted'
+                  example: John Doe
+                account-holder-tax-id:
+                  oneOf:
+                  - type: string
+                  - type: string
+                  description: CPF or CNPJ of the account holder. Required when method is 'ted'
+                  example: '12345678901'
+              additionalProperties: false
+              required:
+              - method
+              - amount
+      responses:
+        '200':
+          description: Asset withdrawal created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  withdrawal:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: Unique identifier for the created withdrawal
+                        example: 660e8400-e29b-41d4-a716-446655440001
+                      amount:
+                        type: string
+                        format: decimal
+                        description: Amount in BRL being withdrawn
+                        example: '100.50'
+                      method:
+                        type: string
+                        enum:
+                        - ted
+                        - pix
+                        description: Withdrawal method (pix or ted)
+                        example: pix
+                      state:
+                        type: string
+                        enum:
+                        - created
+                        - rolled-back
+                        - completed
+                        - processing
+                        description: Current state of the withdrawal
+                        example: created
+                      created-at:
+                        type: string
+                        example: '2024-01-15T10:30:00Z'
+                        format: date-time
+                        description: ISO 8601 timestamp when the withdrawal was created
+                      state-updated-at:
+                        type: string
+                        example: '2024-01-15T10:30:00Z'
+                        format: date-time
+                        description: ISO 8601 timestamp when the withdrawal state was last updated
+                    additionalProperties: false
+                    required:
+                    - id
+                    - amount
+                    - method
+                    - state
+                    - created-at
+                    - state-updated-at
+                    description: Details of the created withdrawal
+                additionalProperties: false
+                required:
+                - withdrawal
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Bad request error details
+                additionalProperties: false
+                required:
+                - error
+        '403':
+          description: Forbidden - Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Forbidden access error details
+                additionalProperties: false
+                required:
+                - error
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Resource not found error details
+                additionalProperties: false
+                required:
+                - error
+        '422':
+          description: Unprocessable entity - Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Validation error details
+                additionalProperties: false
+                required:
+                - error
+      summary: 'DEPRECATED: Create a BRL withdrawal'
+      description: 'DEPRECATED: Use /withdrawals instead. Creates a BRL withdrawal with PIX or TED methods. For PIX withdrawals, only a pix-key is required. For TED withdrawals, full bank account details are required.'
+      tags:
+      - Assets
+  /api/v0/assets/{asset}/deposits:
+    get:
+      parameters:
+      - in: path
+        name: asset
+        required: true
+        schema:
+          type: string
+          enum:
+          - usdc
+          - usdt
+          - brl
+          - brly
+          - usd
+          - brlv
+          - wbrly
+      responses:
+        '200':
+          description: Deposits list retrieved successfully
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - type: object
+                  properties:
+                    deposits:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                            description: Unique identifier for the BRL deposit
+                            example: 660e8400-e29b-41d4-a716-446655440001
+                          type:
+                            type: string
+                            enum:
+                            - token
+                            - pix
+                            - manual-fx
+                            - brlv
+                            description: Type of deposit
+                            example: pix
+                          amount:
+                            type: string
+                            format: decimal
+                            description: Amount of the deposit in BRL
+                            example: '100.50'
+                          status:
+                            type: string
+                            enum:
+                            - created
+                            - credited
+                            - voided
+                            - confirmed
+                            description: Current status of the deposit
+                            example: credited
+                          coordinates:
+                            type: object
+                            properties:
+                              source-tax-id:
+                                type: string
+                                description: Tax ID of the sender (CPF/CNPJ)
+                                example: '12345678900'
+                              source-bank-code:
+                                type: string
+                                description: Bank code of the sender
+                                example: '341'
+                              source-type:
+                                type: string
+                                enum:
+                                - ted
+                                - pix
+                                description: Type of BRL transfer
+                                example: pix
+                              source-account-number:
+                                type: string
+                                description: Account number of the sender
+                                example: 12345-6
+                              source-branch-code:
+                                type: string
+                                description: Branch code of the sender
+                                example: '0001'
+                              target:
+                                oneOf:
+                                - type: string
+                                - type: 'null'
+                            additionalProperties: false
+                            required:
+                            - source-tax-id
+                            - source-bank-code
+                            - source-type
+                            - source-account-number
+                            - source-branch-code
+                            description: Source banking information for the BRL deposit
+                          created-at:
+                            type: string
+                            example: '2024-01-15T10:30:00Z'
+                            format: date-time
+                            description: ISO 8601 timestamp when the deposit was created
+                          processed-at:
+                            type: string
+                            example: '2024-01-15T10:30:00Z'
+                            format: date-time
+                            description: ISO 8601 timestamp when the deposit was processed
+                        additionalProperties: false
+                        required:
+                        - id
+                        - type
+                        - amount
+                        - status
+                        - coordinates
+                        - created-at
+                        - processed-at
+                        description: List of BRL deposits
+                  additionalProperties: false
+                  required:
+                  - deposits
+                  title: BRL Deposits
+                - type: object
+                  properties:
+                    deposits:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                            description: Unique identifier for the BRLV deposit
+                            example: 660e8400-e29b-41d4-a716-446655440001
+                          type:
+                            type: string
+                            enum:
+                            - brlv
+                            description: Type of deposit
+                            example: brlv
+                          amount:
+                            type: string
+                            format: decimal
+                            description: Amount of the deposit
+                            example: '100.500000000000000000'
+                          asset:
+                            type: string
+                            enum:
+                            - tempo/brlv
+                            - eth-base/brlv
+                            - eth-mainnet/brlv
+                            description: The BRLV asset of the deposit
+                            example: eth-base/brlv
+                          status:
+                            type: string
+                            enum:
+                            - created
+                            - credited
+                            - voided
+                            - confirmed
+                            description: Current status of the deposit
+                            example: confirmed
+                          coordinates:
+                            type: object
+                            properties:
+                              source-chain:
+                                type: string
+                                description: Source blockchain network
+                                example: eth-base
+                              source-address:
+                                type: string
+                                description: Source wallet address
+                                example: '0x742d35Cc6635C0532925a3b8D295FD6C6e7e2c2c'
+                              target-address:
+                                type: string
+                                description: Target wallet address
+                                example: '0xdDa4775Ed1d0c831B006FD4061Edb1b30693a44c'
+                            additionalProperties: false
+                            required:
+                            - source-chain
+                            - source-address
+                            - target-address
+                            description: Source and target wallet addresses for the BRLV deposit
+                          tx-hash:
+                            type: string
+                            description: Transaction hash for the BRLV deposit
+                            example: '0x1234567890abcdef1234567890abcdef12345678'
+                          created-at:
+                            type: string
+                            example: '2024-01-15T10:30:00Z'
+                            format: date-time
+                            description: ISO 8601 timestamp when the deposit was created
+                        additionalProperties: false
+                        required:
+                        - id
+                        - type
+                        - amount
+                        - asset
+                        - status
+                        - coordinates
+                        - tx-hash
+                        - created-at
+                        description: List of BRLV deposits
+                  additionalProperties: false
+                  required:
+                  - deposits
+                  title: BRLV Deposits
+                - type: object
+                  properties:
+                    deposits:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          amount:
+                            type: string
+                            format: decimal
+                            description: Amount of the deposit
+                            example: '100.500000000000000000'
+                          coordinates:
+                            type: object
+                            properties:
+                              source-chain:
+                                type: string
+                                description: Source blockchain network
+                                example: eth-base
+                              source-address:
+                                type: string
+                                description: Source wallet address
+                                example: '0x742d35Cc6635C0532925a3b8D295FD6C6e7e2c2c'
+                              target-address:
+                                type: string
+                                description: Target wallet address
+                                example: '0xdDa4775Ed1d0c831B006FD4061Edb1b30693a44c'
+                            additionalProperties: false
+                            required:
+                            - source-chain
+                            - source-address
+                            - target-address
+                            description: Source and target wallet addresses for the token deposit
+                          tx-hash:
+                            type: string
+                            description: Transaction hash for the token deposit
+                            example: '0x1234567890abcdef1234567890abcdef12345678'
+                          type:
+                            type: string
+                            enum:
+                            - token
+                            - pix
+                            - manual-fx
+                            - brlv
+                            description: Type of deposit
+                            example: token
+                          processed-at:
+                            type: string
+                            example: '2024-01-15T10:30:00Z'
+                            format: date-time
+                            description: ISO 8601 timestamp when the deposit was processed
+                          status:
+                            type: string
+                            enum:
+                            - created
+                            - credited
+                            - voided
+                            - confirmed
+                            description: Current status of the deposit
+                            example: confirmed
+                          id:
+                            type: string
+                            format: uuid
+                            description: Unique identifier for the token deposit
+                            example: 660e8400-e29b-41d4-a716-446655440001
+                          created-at:
+                            type: string
+                            example: '2024-01-15T10:30:00Z'
+                            format: date-time
+                            description: ISO 8601 timestamp when the deposit was created
+                          asset:
+                            type: string
+                            enum:
+                            - eth-base/usdt
+                            - eth-mainnet/usdt
+                            - eth-mainnet/usdc
+                            - eth-base/usdc
+                            description: The token asset of the deposit
+                            example: eth-base/usdc
+                        additionalProperties: false
+                        required:
+                        - amount
+                        - coordinates
+                        - tx-hash
+                        - type
+                        - processed-at
+                        - status
+                        - id
+                        - created-at
+                        - asset
+                        description: List of token deposits (USDC/USDT)
+                  additionalProperties: false
+                  required:
+                  - deposits
+                  title: Token Deposits
+                - type: object
+                  properties:
+                    deposits:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                            description: Unique identifier for the USD deposit
+                            example: 660e8400-e29b-41d4-a716-446655440001
+                          type:
+                            type: string
+                            enum:
+                            - token
+                            - pix
+                            - manual-fx
+                            - brlv
+                            description: Type of deposit
+                            example: manual-fx
+                          amount:
+                            type: string
+                            format: decimal
+                            description: Amount of the deposit in USD
+                            example: '100.50'
+                          status:
+                            type: string
+                            enum:
+                            - created
+                            - credited
+                            - voided
+                            - confirmed
+                            description: Current status of the deposit
+                            example: confirmed
+                          coordinates:
+                            type: object
+                            properties:
+                              source:
+                                oneOf:
+                                - type: string
+                                - type: 'null'
+                              target:
+                                oneOf:
+                                - type: string
+                                - type: 'null'
+                            additionalProperties: false
+                            description: Source and target information for the deposit
+                          created-at:
+                            type: string
+                            example: '2024-01-15T10:30:00Z'
+                            format: date-time
+                            description: ISO 8601 timestamp when the deposit was created
+                          processed-at:
+                            oneOf:
+                            - type: string
+                              example: '2024-01-15T10:30:00Z'
+                              format: date-time
+                              description: ISO 8601 timestamp when the deposit was processed
+                            - type: 'null'
+                        additionalProperties: false
+                        required:
+                        - id
+                        - type
+                        - amount
+                        - status
+                        - coordinates
+                        - created-at
+                        description: List of USD deposits
+                  additionalProperties: false
+                  required:
+                  - deposits
+                  title: USD Deposits
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Bad request error details
+                additionalProperties: false
+                required:
+                - error
+        '403':
+          description: Forbidden - Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Forbidden access error details
+                additionalProperties: false
+                required:
+                - error
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Resource not found error details
+                additionalProperties: false
+                required:
+                - error
+        '422':
+          description: Unprocessable entity - Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Validation error details
+                additionalProperties: false
+                required:
+                - error
+      summary: List deposits by asset
+      description: Retrieves a list of deposits for the authenticated user for a specific asset type. Asset can be 'brl', 'usd', 'usdc' or 'usdt'
+      tags:
+      - Assets
+  /api/v0/assets/{asset}/balance:
+    get:
+      parameters:
+      - in: path
+        name: asset
+        required: true
+        schema:
+          type: string
+          enum:
+          - usdc
+          - usdt
+          - brl
+          - brly
+          - usd
+          - brlv
+          - wbrly
+      responses:
+        '200':
+          description: Asset balance retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  balance:
+                    type: object
+                    properties:
+                      running-balance:
+                        type: string
+                        format: decimal
+                        description: Balance rendered at the asset's decimal scale (brl=2, usdc=6, brlv=18).
+                        example: '0.000000000000000000'
+                    additionalProperties: false
+                    required:
+                    - running-balance
+                additionalProperties: false
+                required:
+                - balance
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Bad request error details
+                additionalProperties: false
+                required:
+                - error
+        '403':
+          description: Forbidden - Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Forbidden access error details
+                additionalProperties: false
+                required:
+                - error
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Resource not found error details
+                additionalProperties: false
+                required:
+                - error
+        '422':
+          description: Unprocessable entity - Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Validation error details
+                additionalProperties: false
+                required:
+                - error
+      summary: Get balance by asset
+      description: Retrieves the authenticated account's balance for a given asset. The balance is returned at the asset's decimal scale (brl=2, usdc=6, brlv=18).
+      tags:
+      - Assets
+components:
+  securitySchemes:
+    JwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT-based authentication.
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Your account API Key
+    signature:
+      type: apiKey
+      in: header
+      name: X-Crown-Signature
+      description: HMAC-SHA256 signature of the request body using your webhook secret. Verify this signature to ensure the webhook is from Crown.
+x-webhook-security:
+  note: All webhook requests include an X-Crown-Signature header containing an HMAC-SHA256 signature of the request body. Use your webhook secret (provided when registering the webhook) to verify the signature and ensure the request is authentic.
+  algorithm: HMAC-SHA256
+  header: X-Crown-Signature
+  verification-steps:
+  - 1. Extract the X-Crown-Signature header from the request
+  - 2. Compute HMAC-SHA256 of the raw request body using your webhook secret
+  - 3. Compare the computed signature with the header value
+  - 4. Only process the webhook if signatures match
+  example-code:
+    node-js: "const crypto = require('crypto');\nconst signature = crypto.createHmac('sha256', webhookSecret)\n  .update(JSON.stringify(requestBody))\n  .digest('hex');\nconst isValid = signature === req.headers['x-crown-signature'];"
+    python: "import hmac\nimport hashlib\nimport json\n\nsignature = hmac.new(\n    webhook_secret.encode('utf-8'),\n    json.dumps(request_body).encode('utf-8'),\n    hashlib.sha256\n).hexdigest()\nis_valid = signature == request.headers['x-crown-signature']"

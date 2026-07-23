@@ -1,0 +1,185 @@
+openapi: 3.1.0
+info:
+  title: Crown API & Webhooks Accounts Tax Exemption API
+  version: 1.0.0
+  description: 'Open API 3 docs for Crown API
+
+
+    Webhook events that Crown will POST to your configured endpoint URL. All webhooks expect a 200 OK response. Payloads use kebab-case for all keys to match the Crown API conventions.'
+servers:
+- url: https://app.crown-brlv.com
+  description: Production server
+tags:
+- name: Tax Exemption
+paths:
+  /api/v0/tax-exemption/progress:
+    get:
+      responses:
+        '200':
+          description: Tax exemption progress retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tax-exemption-progress:
+                    type: object
+                    properties:
+                      claims-amount:
+                        type: string
+                        format: decimal
+                      other-disposals-amount:
+                        type: string
+                        format: decimal
+                      total-used:
+                        type: string
+                        format: decimal
+                      limit:
+                        type: string
+                        format: decimal
+                      remaining:
+                        type: string
+                        format: decimal
+                    additionalProperties: false
+                    required:
+                    - claims-amount
+                    - other-disposals-amount
+                    - total-used
+                    - limit
+                    - remaining
+                additionalProperties: false
+                required:
+                - tax-exemption-progress
+        '400':
+          description: Bad request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Bad request error details
+                additionalProperties: false
+                required:
+                - error
+        '403':
+          description: Forbidden - Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Forbidden access error details
+                additionalProperties: false
+                required:
+                - error
+        '404':
+          description: Not found - Resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Resource not found error details
+                additionalProperties: false
+                required:
+                - error
+        '422':
+          description: Unprocessable entity - Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                      code:
+                        type: string
+                    additionalProperties: false
+                    required:
+                    - type
+                    - message
+                    - code
+                    description: Validation error details
+                additionalProperties: false
+                required:
+                - error
+      summary: Get monthly tax exemption progress
+      description: 'Returns the current month''s tax exemption progress for Brazilian accounts. Shows the breakdown of disposals that count toward the R$35,000 monthly limit: resgates (claims) and outras alienações (burns and BRLV target-wallet transfers).'
+      tags:
+      - Tax Exemption
+components:
+  securitySchemes:
+    JwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT-based authentication.
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Your account API Key
+    signature:
+      type: apiKey
+      in: header
+      name: X-Crown-Signature
+      description: HMAC-SHA256 signature of the request body using your webhook secret. Verify this signature to ensure the webhook is from Crown.
+x-webhook-security:
+  note: All webhook requests include an X-Crown-Signature header containing an HMAC-SHA256 signature of the request body. Use your webhook secret (provided when registering the webhook) to verify the signature and ensure the request is authentic.
+  algorithm: HMAC-SHA256
+  header: X-Crown-Signature
+  verification-steps:
+  - 1. Extract the X-Crown-Signature header from the request
+  - 2. Compute HMAC-SHA256 of the raw request body using your webhook secret
+  - 3. Compare the computed signature with the header value
+  - 4. Only process the webhook if signatures match
+  example-code:
+    node-js: "const crypto = require('crypto');\nconst signature = crypto.createHmac('sha256', webhookSecret)\n  .update(JSON.stringify(requestBody))\n  .digest('hex');\nconst isValid = signature === req.headers['x-crown-signature'];"
+    python: "import hmac\nimport hashlib\nimport json\n\nsignature = hmac.new(\n    webhook_secret.encode('utf-8'),\n    json.dumps(request_body).encode('utf-8'),\n    hashlib.sha256\n).hexdigest()\nis_valid = signature == request.headers['x-crown-signature']"
