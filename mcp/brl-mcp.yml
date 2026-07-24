@@ -1,0 +1,85 @@
+generated: '2026-07-18'
+method: derived
+status: candidate
+source: openapi/brl-openapi-original.json
+note: >-
+  No official hosted/remote MCP server was found for Crown. This is a CANDIDATE
+  tool list derived from the current v1 REST surface (the OpenAPI declares no
+  operationIds, so each tool is grounded in a real HTTP method + path). Auth for
+  any generated server must mint the per-request self-signed RS256 JWT plus the
+  X-API-Key header (see authentication/brl-authentication.yml).
+server:
+  name: crown
+  transport: http
+  base_url: https://app.crown-brlv.com
+  url: null
+tools:
+- name: list_accounts
+  description: List the authenticated account and its sub-accounts.
+  source_operation: GET /api/v1/accounts
+- name: create_account
+  description: Request creation of a known-taxpayer sub-account (compliance review). Requires manage-holders.
+  source_operation: POST /api/v1/accounts
+- name: get_account
+  description: Fetch a single account (self or sub-account) by id.
+  source_operation: GET /api/v1/accounts/{account-id}
+- name: get_balance
+  description: Retrieve the account balance for a given asset.
+  source_operation: GET /api/v1/accounts/{account-id}/assets/{asset}/balance
+- name: list_wallets
+  description: List wallets, optionally filtered by assets/addresses.
+  source_operation: GET /api/v1/accounts/{account-id}/wallets
+- name: create_wallet
+  description: Create a wallet with default assets (BRLV, wBRLY).
+  source_operation: POST /api/v1/accounts/{account-id}/wallets
+- name: update_wallet_metadata
+  description: Update metadata / UI visibility for a wallet.
+  source_operation: PATCH /api/v1/accounts/{account-id}/wallets/{wallet-id}/metadata
+- name: create_quote
+  description: Create a quote to convert between fiat and/or token assets.
+  source_operation: POST /api/v1/accounts/{account-id}/quotes
+- name: create_order
+  description: Create an order by accepting a quote.
+  source_operation: POST /api/v1/accounts/{account-id}/orders
+- name: list_orders
+  description: List orders for the account.
+  source_operation: GET /api/v1/accounts/{account-id}/orders
+- name: get_order
+  description: Retrieve a specific order by id.
+  source_operation: GET /api/v1/accounts/{account-id}/orders/{id}
+- name: get_pix_deposit
+  description: Get the static PIX BR Code (EMV payload + QR PNG) to fund the BRL balance.
+  source_operation: GET /api/v1/accounts/{account-id}/deposits/pix
+- name: list_deposits
+  description: List deposits for a given asset.
+  source_operation: GET /api/v1/accounts/{account-id}/assets/{asset}/deposits
+- name: get_deposit
+  description: Retrieve a specific deposit by id.
+  source_operation: GET /api/v1/accounts/{account-id}/assets/{asset}/deposits/{id}
+- name: create_withdrawal
+  description: Create a fiat (PIX/TED) or token withdrawal.
+  source_operation: POST /api/v1/accounts/{account-id}/withdrawals
+- name: list_withdrawals
+  description: List withdrawals for the account.
+  source_operation: GET /api/v1/accounts/{account-id}/withdrawals
+- name: create_transfer
+  description: Transfer tokens between EVM wallets.
+  source_operation: POST /api/v1/accounts/{account-id}/transfers
+- name: list_transfers
+  description: List token transfers, filterable by address/asset/state.
+  source_operation: GET /api/v1/accounts/{account-id}/transfers
+- name: create_claim
+  description: Submit a claim for an amount from reward certificates.
+  source_operation: POST /api/v1/accounts/{account-id}/claims
+- name: list_certificates
+  description: List reward certificates and claimable amounts.
+  source_operation: GET /api/v1/accounts/{account-id}/claims/certificates
+- name: create_auto_claim
+  description: Schedule a recurring claim on a UNIX cron. Requires auto-claim-rewards.
+  source_operation: POST /api/v1/accounts/{account-id}/auto-claims
+- name: create_nft_transfer
+  description: Transfer a reward-certificate NFT between EVM wallets.
+  source_operation: POST /api/v1/accounts/{account-id}/nft-transfers
+- name: get_tax_exemption_progress
+  description: Get current-month Brazilian tax-exemption progress toward the R$35,000 limit.
+  source_operation: GET /api/v1/accounts/{account-id}/tax-exemption/progress

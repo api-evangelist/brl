@@ -1,0 +1,36 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Crown API & Webhooks
+  version: 1.0.0
+extends: openapi/brl-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-slug: brl
+    x-apievangelist-provider: Crown (BRLV)
+    x-apievangelist-enrichment-date: '2026-07-18'
+    x-apievangelist-notes: >-
+      Crown / BRLV stablecoin API. Auth pairs an X-API-Key identifier with a
+      short-lived (<=50s) self-signed RS256 JWT that binds the request URI, a
+      nonce, and a SHA-256 body hash. Errors use a { error: { type, message,
+      code } } envelope (not RFC 9457). Two URI-path versions coexist (v1
+      account-scoped current, v0 legacy). Webhooks are HMAC-SHA256 signed via
+      X-Crown-Signature.
+- target: $
+  update:
+    x-apievangelist-observations:
+      operation_ids_missing: true
+      tags_missing: true
+      components_schemas_inlined: true
+      idempotency: not-documented
+      pagination: not-documented
+      rate_limit_signaling: not-documented
+      error_format: custom-envelope
+- target: $.info
+  update:
+    x-apievangelist-recommendations:
+    - Add operationId to every operation (currently none) to enable code-gen, MCP tools, and Arazzo workflows.
+    - Add tags to group operations (accounts, wallets, quotes, orders, deposits, withdrawals, transfers, claims, auto-claims, nft-transfers, tax-exemption).
+    - Document pagination on list endpoints (cursor/limit) and rate-limit signaling (Retry-After / 429).
+    - Publish an idempotency-key contract for POST create operations (orders, withdrawals, transfers, claims).
+    - Serve a real RFC 9116 /.well-known/security.txt (current path returns the SPA HTML shell).

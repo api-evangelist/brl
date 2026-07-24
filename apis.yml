@@ -1,7 +1,20 @@
 aid: brl
 name: BRL
-description: 'BRL is a company surfaced as a portfolio company of paradigm and added to the API Evangelist
-  network as a stub for enrichment. Sector: crypto. This profile is a lead awaiting the enrichment pipeline.'
+description: >-
+  Crown (brl.xyz) is a Brazilian fintech, backed by Paradigm, Coinbase Ventures
+  and Paxos, that issues BRLV — a stablecoin pegged 1:1 to the Brazilian Real
+  and backed by Brazilian federal government bonds held in a bankruptcy-remote
+  structure under temporary authorization from the Banco Central do Brasil. The
+  Crown API lets partners create known-taxpayer accounts and sub-accounts,
+  provision wallets, fund balances via PIX and TED, request quotes and place
+  conversion orders across fiat (BRL/USD) and tokens (BRLV, wBRLY, USDC, USDT on
+  Base and Ethereum mainnet), move tokens on-chain, claim accumulated yield from
+  reward certificates (including recurring auto-claims and NFT reward-certificate
+  transfers), withdraw via PIX/TED or token, track Brazilian monthly
+  tax-exemption progress, and subscribe to webhooks for deposit, order, transfer,
+  withdrawal, claim and sub-account approval events. Authentication pairs an
+  X-API-Key identifier with a short-lived (<50s) self-signed RS256 JWT that binds
+  each request's URI, nonce and SHA-256 body hash.
 url: https://raw.githubusercontent.com/api-evangelist/brl/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -9,18 +22,287 @@ x-backed-by:
 - paradigm
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
 - Crypto
-apis: []
+- Stablecoin
+- Payments
+- Brazil
+- PIX
+- Fintech
+- Blockchain
+- Digital Assets
+- Wallets
+- Yield
+image: https://raw.githubusercontent.com/api-evangelist/brl/refs/heads/main/apis.yml
+apis:
+- aid: brl:brl-accounts-api
+  name: BRL Accounts API
+  description: The Accounts API from BRL — 27 operation(s) for accounts.
+  humanURL: https://docs.crown-brlv.com/
+  baseURL: https://app.crown-brlv.com
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/brl-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.crown-brlv.com/
+  - type: APIReference
+    url: https://docs.crown-brlv.com/api-reference/introduction
+  - type: GettingStarted
+    url: https://docs.crown-brlv.com/guides/api-keys-setup
+  - type: Authentication
+    url: https://docs.crown-brlv.com/guides/authentication
+  - type: Webhooks
+    url: https://docs.crown-brlv.com/guides/webhooks-setup
+- aid: brl:brl-assets-api
+  name: BRL Assets API
+  description: The Assets API from BRL — 4 operation(s) for assets.
+  humanURL: https://docs.crown-brlv.com/
+  baseURL: https://app.crown-brlv.com
+  tags:
+  - Assets
+  properties:
+  - type: OpenAPI
+    url: openapi/brl-assets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.crown-brlv.com/
+  - type: APIReference
+    url: https://docs.crown-brlv.com/api-reference/introduction
+  - type: GettingStarted
+    url: https://docs.crown-brlv.com/guides/api-keys-setup
+  - type: Authentication
+    url: https://docs.crown-brlv.com/guides/authentication
+  - type: Webhooks
+    url: https://docs.crown-brlv.com/guides/webhooks-setup
+- aid: brl:brl-claims-api
+  name: BRL Claims API
+  description: The Claims API from BRL — 2 operation(s) for claims.
+  humanURL: https://docs.crown-brlv.com/
+  baseURL: https://app.crown-brlv.com
+  tags:
+  - Claims
+  properties:
+  - type: OpenAPI
+    url: openapi/brl-claims-api-openapi.yml
+  - type: Documentation
+    url: https://docs.crown-brlv.com/
+  - type: APIReference
+    url: https://docs.crown-brlv.com/api-reference/introduction
+  - type: GettingStarted
+    url: https://docs.crown-brlv.com/guides/api-keys-setup
+  - type: Authentication
+    url: https://docs.crown-brlv.com/guides/authentication
+  - type: Webhooks
+    url: https://docs.crown-brlv.com/guides/webhooks-setup
+- aid: brl:brl-nft-transfers-api
+  name: BRL Nft Transfers API
+  description: The Nft Transfers API from BRL — 1 operation(s) for nft transfers.
+  humanURL: https://docs.crown-brlv.com/
+  baseURL: https://app.crown-brlv.com
+  tags:
+  - Nft Transfers
+  properties:
+  - type: OpenAPI
+    url: openapi/brl-nft-transfers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.crown-brlv.com/
+  - type: APIReference
+    url: https://docs.crown-brlv.com/api-reference/introduction
+  - type: GettingStarted
+    url: https://docs.crown-brlv.com/guides/api-keys-setup
+  - type: Authentication
+    url: https://docs.crown-brlv.com/guides/authentication
+  - type: Webhooks
+    url: https://docs.crown-brlv.com/guides/webhooks-setup
+- aid: brl:brl-orders-api
+  name: BRL Orders API
+  description: The Orders API from BRL — 2 operation(s) for orders.
+  humanURL: https://docs.crown-brlv.com/
+  baseURL: https://app.crown-brlv.com
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/brl-orders-api-openapi.yml
+  - type: Documentation
+    url: https://docs.crown-brlv.com/
+  - type: APIReference
+    url: https://docs.crown-brlv.com/api-reference/introduction
+  - type: GettingStarted
+    url: https://docs.crown-brlv.com/guides/api-keys-setup
+  - type: Authentication
+    url: https://docs.crown-brlv.com/guides/authentication
+  - type: Webhooks
+    url: https://docs.crown-brlv.com/guides/webhooks-setup
+- aid: brl:brl-quotes-api
+  name: BRL Quotes API
+  description: The Quotes API from BRL — 1 operation(s) for quotes.
+  humanURL: https://docs.crown-brlv.com/
+  baseURL: https://app.crown-brlv.com
+  tags:
+  - Quotes
+  properties:
+  - type: OpenAPI
+    url: openapi/brl-quotes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.crown-brlv.com/
+  - type: APIReference
+    url: https://docs.crown-brlv.com/api-reference/introduction
+  - type: GettingStarted
+    url: https://docs.crown-brlv.com/guides/api-keys-setup
+  - type: Authentication
+    url: https://docs.crown-brlv.com/guides/authentication
+  - type: Webhooks
+    url: https://docs.crown-brlv.com/guides/webhooks-setup
+- aid: brl:brl-tax-exemption-api
+  name: BRL Tax Exemption API
+  description: The Tax Exemption API from BRL — 1 operation(s) for tax exemption.
+  humanURL: https://docs.crown-brlv.com/
+  baseURL: https://app.crown-brlv.com
+  tags:
+  - Tax Exemption
+  properties:
+  - type: OpenAPI
+    url: openapi/brl-tax-exemption-api-openapi.yml
+  - type: Documentation
+    url: https://docs.crown-brlv.com/
+  - type: APIReference
+    url: https://docs.crown-brlv.com/api-reference/introduction
+  - type: GettingStarted
+    url: https://docs.crown-brlv.com/guides/api-keys-setup
+  - type: Authentication
+    url: https://docs.crown-brlv.com/guides/authentication
+  - type: Webhooks
+    url: https://docs.crown-brlv.com/guides/webhooks-setup
+- aid: brl:brl-transfers-api
+  name: BRL Transfers API
+  description: The Transfers API from BRL — 1 operation(s) for transfers.
+  humanURL: https://docs.crown-brlv.com/
+  baseURL: https://app.crown-brlv.com
+  tags:
+  - Transfers
+  properties:
+  - type: OpenAPI
+    url: openapi/brl-transfers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.crown-brlv.com/
+  - type: APIReference
+    url: https://docs.crown-brlv.com/api-reference/introduction
+  - type: GettingStarted
+    url: https://docs.crown-brlv.com/guides/api-keys-setup
+  - type: Authentication
+    url: https://docs.crown-brlv.com/guides/authentication
+  - type: Webhooks
+    url: https://docs.crown-brlv.com/guides/webhooks-setup
+- aid: brl:brl-wallets-api
+  name: BRL Wallets API
+  description: The Wallets API from BRL — 4 operation(s) for wallets.
+  humanURL: https://docs.crown-brlv.com/
+  baseURL: https://app.crown-brlv.com
+  tags:
+  - Wallets
+  properties:
+  - type: OpenAPI
+    url: openapi/brl-wallets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.crown-brlv.com/
+  - type: APIReference
+    url: https://docs.crown-brlv.com/api-reference/introduction
+  - type: GettingStarted
+    url: https://docs.crown-brlv.com/guides/api-keys-setup
+  - type: Authentication
+    url: https://docs.crown-brlv.com/guides/authentication
+  - type: Webhooks
+    url: https://docs.crown-brlv.com/guides/webhooks-setup
+- aid: brl:brl-withdrawals-api
+  name: BRL Withdrawals API
+  description: The Withdrawals API from BRL — 2 operation(s) for withdrawals.
+  humanURL: https://docs.crown-brlv.com/
+  baseURL: https://app.crown-brlv.com
+  tags:
+  - Withdrawals
+  properties:
+  - type: OpenAPI
+    url: openapi/brl-withdrawals-api-openapi.yml
+  - type: Documentation
+    url: https://docs.crown-brlv.com/
+  - type: APIReference
+    url: https://docs.crown-brlv.com/api-reference/introduction
+  - type: GettingStarted
+    url: https://docs.crown-brlv.com/guides/api-keys-setup
+  - type: Authentication
+    url: https://docs.crown-brlv.com/guides/authentication
+  - type: Webhooks
+    url: https://docs.crown-brlv.com/guides/webhooks-setup
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/brl-domain-security.yml
+- type: Authentication
+  url: authentication/brl-authentication.yml
 - type: Website
   url: https://brl.xyz
+- type: DeveloperPortal
+  url: https://docs.crown-brlv.com/
+- type: Documentation
+  url: https://docs.crown-brlv.com/
+- type: APIReference
+  url: https://docs.crown-brlv.com/api-reference/introduction
+- type: GettingStarted
+  url: https://docs.crown-brlv.com/guides/api-keys-setup
+- type: SignUp
+  url: https://onboarding.crown-brlv.com/start
+- type: Login
+  url: https://app.crown-brlv.com/
+- type: PrivacyPolicy
+  url: https://d2bv8dtly8iz1m.cloudfront.net/crown/Crown_PT_Termo_de_Privacidade_27a36188f2.pdf
+- type: LinkedIn
+  url: https://www.linkedin.com/company/crown-brl/
+- type: OpenAPI
+  url: openapi/brl-openapi-original.json
+- type: LLMsTxt
+  url: llms/brl-llms.txt
+- type: Webhooks
+  url: asyncapi/brl-webhooks.yml
+- type: Conventions
+  url: conventions/brl-conventions.yml
+- type: ErrorCatalog
+  url: errors/brl-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/brl-lifecycle.yml
+- type: Conformance
+  url: conformance/brl-conformance.yml
+- type: DataModel
+  url: data-model/brl-data-model.yml
+- type: MCPServer
+  url: mcp/brl-mcp.yml
+- type: Overlay
+  url: overlays/brl-openapi-overlay.yaml
+- type: AgenticAccess
+  url: agentic-access/brl-agentic-access.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

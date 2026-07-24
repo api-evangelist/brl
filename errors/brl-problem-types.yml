@@ -1,0 +1,35 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/brl-openapi-original.json
+format: custom-envelope
+envelope:
+  shape: '{ "error": { "type": string, "message": string, "code": string } }'
+  content_type: application/json
+  fields:
+    type: Machine-readable error class
+    message: Human-readable description
+    code: Stable error code string
+  note: >-
+    Crown uses a consistent enveloped error object rather than RFC 9457
+    problem+json. Every 4xx response returns application/json with a single
+    required `error` object carrying type, message and code.
+problems:
+- status: 400
+  title: Bad request
+  description: Invalid input parameters.
+  media: application/json
+- status: 403
+  title: Forbidden
+  description: >-
+    Access denied — the caller lacks the required capability, or the target
+    account/resource is not the caller or one of its sub-accounts.
+  media: application/json
+- status: 404
+  title: Not found
+  description: The requested resource does not exist (or is not visible to the caller).
+  media: application/json
+- status: 422
+  title: Unprocessable entity
+  description: Validation failed — the request was well-formed but failed business-rule validation.
+  media: application/json
+docs: https://docs.crown-brlv.com/api-reference/introduction

@@ -1,0 +1,32 @@
+{
+  "provider": "brl",
+  "sources": [
+    "brl-accounts-api-openapi.yml",
+    "brl-assets-api-openapi.yml",
+    "brl-claims-api-openapi.yml",
+    "brl-nft-transfers-api-openapi.yml",
+    "brl-orders-api-openapi.yml",
+    "brl-quotes-api-openapi.yml",
+    "brl-tax-exemption-api-openapi.yml",
+    "brl-transfers-api-openapi.yml",
+    "brl-wallets-api-openapi.yml",
+    "brl-withdrawals-api-openapi.yml"
+  ],
+  "outputs": [
+    "brl-accounts-api-openapi.yml",
+    "brl-assets-api-openapi.yml",
+    "brl-claims-api-openapi.yml",
+    "brl-nft-transfers-api-openapi.yml",
+    "brl-orders-api-openapi.yml",
+    "brl-quotes-api-openapi.yml",
+    "brl-tax-exemption-api-openapi.yml",
+    "brl-transfers-api-openapi.yml",
+    "brl-wallets-api-openapi.yml",
+    "brl-withdrawals-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

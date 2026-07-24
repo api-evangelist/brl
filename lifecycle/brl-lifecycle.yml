@@ -1,0 +1,31 @@
+generated: '2026-07-18'
+method: searched
+source: openapi/brl-openapi-original.json
+docs: https://docs.crown-brlv.com/api-reference/introduction
+versioning:
+  scheme: uri-path
+  current: v1
+  legacy: v0
+  spec_version: '1.0.0'
+  note: >-
+    The API exposes two URI-path versions. v1 is the current, account-scoped
+    surface (/api/v1/accounts/{account-id}/...). v0 is the earlier flat surface
+    (/api/v0/...) that remains available for the same resources (orders, quotes,
+    wallets, claims, transfers, withdrawals, deposits, nft-transfers,
+    tax-exemption, balance). The product self-describes as "a v0 release" under
+    active evolution.
+maturity: early / v0-release (evolving, feedback-driven)
+deprecation:
+  policy_published: false
+  sunset_header: unknown
+  note: >-
+    No formal deprecation/sunset policy (RFC 8594 Deprecation/Sunset headers) is
+    documented. v0 routes appear to be legacy relative to v1 but no dated sunset
+    was published, so no Deprecation pointer is emitted.
+status_page:
+  url: null
+  note: No public status page was found (status.crown-brlv.com does not resolve).
+sla:
+  url: null
+  note: No published SLA/uptime target found.
+deprecated_operations: []

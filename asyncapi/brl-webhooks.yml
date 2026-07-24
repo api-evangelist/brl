@@ -1,0 +1,66 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.crown-brlv.com/guides/webhooks-setup
+spec_type: Webhooks
+summary: >-
+  Crown POSTs event notifications to a partner-configured endpoint URL. The
+  provider publishes webhook definitions inside its OpenAPI 3.1 document
+  (top-level `webhooks`) but ships no standalone AsyncAPI document. Every
+  delivery is authenticated with an X-Crown-Signature HMAC-SHA256 header and
+  must be acknowledged with a 200 OK within 5 seconds; failed deliveries may be
+  retried automatically.
+delivery:
+  transport: https-webhook
+  registration: Crown dashboard "Manage Users" -> Webhook URL -> Register Webhook (immediately active)
+  auth:
+    header: X-Crown-Signature
+    scheme: HMAC-SHA256 of the raw request body using the account webhook secret
+  ack: 200 OK within 5 seconds
+  retries: automatic on failure (backoff not published)
+  key_casing: kebab-case
+envelope:
+  required:
+  - event-id      # uuid, unique per delivery
+  - event-type    # kebab-case event name (see events[].event_type)
+  - payload       # event-specific object
+events:
+- event_type: deposit-processed
+  operation_id: depositProcessed
+  summary: Deposit Processed
+  description: >-
+    A deposit was credited to the account. Covers fiat deposits (BRL via PIX or
+    TED) and crypto deposits; a USDC/USDT/BRLV token transferred into one of the
+    account's wallets is also treated as a deposit and carries the crypto payload
+    variant with the asset and on-chain addresses.
+- event_type: order-completed
+  operation_id: orderCompleted
+  summary: Order Completed
+  description: A currency-conversion order has been successfully completed.
+- event_type: token-transfer-completed
+  operation_id: tokenTransferCompleted
+  summary: Token Transfer Completed
+  description: A token transfer sent from one of the account's wallets completed on-chain.
+- event_type: withdraw-completed
+  operation_id: withdrawCompleted
+  summary: Withdrawal Completed
+  description: A withdrawal (BRL PIX/TED or token) was successfully processed and sent.
+- event_type: claim-completed
+  operation_id: claimCompleted
+  summary: Claim Completed
+  description: A yield claim was processed and tokens were deposited.
+- event_type: account-approved
+  operation_id: accountApproved
+  summary: Sub-account Approved
+  description: >-
+    A partner-initiated sub-account creation request cleared compliance and the
+    sub-account was provisioned and activated. Fires on the parent account.
+- event_type: account-rejected
+  operation_id: accountRejected
+  summary: Sub-account Rejected
+  description: >-
+    A partner-initiated sub-account creation request was not approved (rejected,
+    expired, or cancelled). The reason is intentionally opaque and never
+    discloses sanctions/KYC details. Fires on the parent account.
+docs:
+- https://docs.crown-brlv.com/guides/webhooks-setup
+- https://docs.crown-brlv.com/api-reference/webhooks/deposit-processed

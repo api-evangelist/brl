@@ -1,0 +1,60 @@
+generated: '2026-07-18'
+method: searched
+source: openapi/brl-openapi-original.json
+docs: https://docs.crown-brlv.com/api-reference/introduction
+summary: Cross-cutting request/response semantics for the Crown API, derived from the OpenAPI 3.1 spec and the developer guides.
+authentication:
+  style: X-API-Key header + self-signed per-request RS256 JWT (Authorization Bearer)
+  detail: authentication/brl-authentication.yml
+  request_binding: >-
+    Each JWT binds the request URI, a per-request nonce, and a SHA-256 body hash
+    (bodyHash claim), giving per-request integrity and replay protection. Token
+    lifetime must be <= 50 seconds.
+key_casing:
+  style: kebab-case
+  note: All request/response and webhook JSON keys use kebab-case (e.g. account-id, event-type, source-wallet-address).
+idempotency:
+  supported: false
+  note: >-
+    No Idempotency-Key header or parameter is documented in the spec or guides.
+    Per-request replay protection is provided instead by the JWT nonce + bodyHash
+    binding, but this is not a retry-safe idempotency contract.
+pagination:
+  documented: false
+  note: >-
+    No cursor/offset/limit/page query parameters are declared on list operations
+    in the OpenAPI. List endpoints (accounts, orders, wallets, deposits,
+    withdrawals, transfers, claims) support filter query params (asset, assets,
+    state, source-address, target-address, addresses) but no explicit paging
+    parameters were found.
+filtering:
+  params: [asset, assets, state, source-address, target-address, addresses]
+versioning:
+  scheme: uri-path
+  current: v1
+  legacy: v0
+  note: >-
+    Two URI-path versions coexist. v1 routes are account-scoped
+    (/api/v1/accounts/{account-id}/...); v0 routes are the earlier flat surface
+    (/api/v0/...). The product self-describes as "a v0 release" still evolving.
+  detail: lifecycle/brl-lifecycle.yml
+error_envelope:
+  shape: '{ "error": { "type": string, "message": string, "code": string } }'
+  content_type: application/json
+  problem_json: false
+  detail: errors/brl-problem-types.yml
+webhooks:
+  signature_header: X-Crown-Signature
+  scheme: HMAC-SHA256 of the raw body with the account webhook secret
+  ack: 200 OK within 5 seconds
+  detail: asyncapi/brl-webhooks.yml
+rate_limiting:
+  signaled: false
+  note: No rate-limit headers (X-RateLimit-*, Retry-After) or 429 responses are declared in the spec.
+authorization:
+  model: account-capabilities
+  note: Operations gate on account capabilities such as manage-holders and auto-claim-rewards (not OAuth scopes).
+assets:
+  fiat: [fiat/brl, fiat/usd]
+  tokens: [eth-base/brlv, eth-mainnet/brlv, eth-base/wbrly, eth-base/usdc, eth-base/usdt]
+  note: Wallet addresses are EVM (0x...) and required only for token assets; fiat assets need no wallet address.

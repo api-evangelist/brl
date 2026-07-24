@@ -1,0 +1,100 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/brl-openapi-original.json
+note: >-
+  Entity-relationship graph derived from the Crown API resource paths and the
+  endpoint reference (the OpenAPI inlines all schemas, so relationships are
+  derived from URI structure, id-reference fields, and endpoint descriptions,
+  not from components.schemas).
+entities:
+- name: account
+  description: A partner account, or a known-taxpayer individual sub-account under a partner.
+  id: account-id (uuid)
+  fields: [parent-id, status, type, capabilities]
+  relationships:
+  - has_many: account
+    via: parent-id
+    note: A partner account has many sub-accounts (self-referential; sub-account.parent-id = partner.account-id).
+  - has_many: wallet
+  - has_many: order
+  - has_many: deposit
+  - has_many: withdrawal
+  - has_many: transfer
+  - has_many: auto-claim-schedule
+- name: wallet
+  description: An EVM wallet holding token assets (BRLV, wBRLY, USDC, USDT).
+  id: wallet-id / wallet-address (0x...)
+  relationships:
+  - belongs_to: account
+  - has_many: reward-certificate
+  - has_many: auto-claim-schedule
+    via: wallet-address
+- name: quote
+  description: A conversion quote between two assets (fiat or token); consumed to create an order.
+  relationships:
+  - belongs_to: account
+  - has_one: order
+    note: A quote is accepted to create an order.
+- name: order
+  description: A currency-conversion order created by accepting a quote.
+  id: id
+  relationships:
+  - belongs_to: account
+  - belongs_to: quote
+- name: deposit
+  description: A credit to the account balance via PIX/TED (BRL) or on-chain token, per asset (brl/usd/usdc/usdt).
+  id: id
+  relationships:
+  - belongs_to: account
+- name: withdrawal
+  description: A payout via fiat (PIX/TED) or token (method token).
+  id: id
+  relationships:
+  - belongs_to: account
+- name: transfer
+  description: A token transfer between EVM wallets (source-address -> target-address).
+  relationships:
+  - belongs_to: account
+  - belongs_to: wallet
+    via: source-address
+- name: nft-transfer
+  description: A transfer of a reward-certificate NFT between EVM wallets.
+  relationships:
+  - belongs_to: account
+  - belongs_to: reward-certificate
+- name: reward-certificate
+  description: An NFT representing accrued yield, held at a wallet, with a claimable amount (FIFO allocation).
+  relationships:
+  - belongs_to: wallet
+  - has_many: claim
+- name: claim
+  description: A request to claim a specified amount from reward certificates (account- or wallet-scoped).
+  relationships:
+  - belongs_to: account
+  - belongs_to: reward-certificate
+- name: auto-claim-schedule
+  description: A recurring claim on a UNIX cron (>= daily), account- or wallet-scoped, pausable/resumable, with skip windows.
+  id: schedule-id (uuid)
+  fields: [last-run-at, cron, amount, state]
+  relationships:
+  - belongs_to: account
+  - has_many: auto-claim-skip
+    via: skip-id
+- name: auto-claim-skip
+  description: A date or date-range window during which an auto-claim schedule is suppressed.
+  id: skip-id
+  relationships:
+  - belongs_to: auto-claim-schedule
+- name: balance
+  description: The account's balance for a given asset.
+  relationships:
+  - belongs_to: account
+- name: tax-exemption-progress
+  description: >-
+    The current month's Brazilian tax-exemption progress toward the R$35,000
+    monthly limit (resgates/claims and outras alienacoes/burns + BRLV transfers).
+  relationships:
+  - belongs_to: account
+assets:
+  fiat: [fiat/brl, fiat/usd]
+  tokens: [eth-base/brlv, eth-mainnet/brlv, eth-base/wbrly, eth-base/usdc, eth-base/usdt]
