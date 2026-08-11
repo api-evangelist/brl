@@ -280,7 +280,7 @@ common:
 - type: LinkedIn
   url: https://www.linkedin.com/company/crown-brl/
 - type: OpenAPI
-  url: openapi/brl-openapi-original.json
+  url: openapi/_original/brl-openapi-original.json
 - type: LLMsTxt
   url: llms/brl-llms.txt
 - type: Webhooks
