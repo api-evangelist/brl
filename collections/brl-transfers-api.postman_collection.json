@@ -1,0 +1,639 @@
+{
+  "item": [
+    {
+      "id": "62f7a942-a2ea-4903-9bc7-560114bbbdd2",
+      "name": "Transfers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "63beea8e-417b-4fd7-b135-d8408d64bd2f",
+          "name": "List transfers",
+          "request": {
+            "name": "List transfers",
+            "description": {
+              "content": "Retrieves a list of token transfers for the authenticated user. Can be filtered by source-address, target-address, asset, or state.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v0",
+                "transfers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "source-address",
+                  "value": "<string>",
+                  "description": "Filter by source wallet address"
+                },
+                {
+                  "disabled": false,
+                  "key": "target-address",
+                  "value": "<string>",
+                  "description": "Filter by target wallet address"
+                },
+                {
+                  "disabled": false,
+                  "key": "asset",
+                  "value": "<string>",
+                  "description": "Filter by asset"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "Filter by transfer state"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9202220d-f775-424a-9cc2-fa01a16e1e4d",
+              "name": "Transfers list retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source-address",
+                      "value": "0xabcdef1234567890abcdef1234567890abcdef12"
+                    },
+                    {
+                      "key": "target-address",
+                      "value": "0x1234567890abcdef1234567890abcdef12345678"
+                    },
+                    {
+                      "key": "asset",
+                      "value": "eth-base/brlv"
+                    },
+                    {
+                      "key": "state",
+                      "value": "completed"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transfers\": [\n    {\n      \"amount\": \"100.50\",\n      \"state-updated-at\": \"2024-01-15T10:30:00Z\",\n      \"tx-hash\": \"string\",\n      \"state\": \"created\",\n      \"source-address\": \"0xabcdef1234567890abcdef1234567890abcdef12\",\n      \"id\": \"660e8400-e29b-41d4-a716-446655440003\",\n      \"target-address\": \"0x1234567890abcdef1234567890abcdef12345678\",\n      \"created-at\": \"2024-01-15T10:30:00Z\",\n      \"asset\": \"eth-base/brlv\"\n    },\n    {\n      \"amount\": \"100.50\",\n      \"state-updated-at\": \"2024-01-15T10:30:00Z\",\n      \"tx-hash\": \"string\",\n      \"state\": \"created\",\n      \"source-address\": \"0xabcdef1234567890abcdef1234567890abcdef12\",\n      \"id\": \"660e8400-e29b-41d4-a716-446655440003\",\n      \"target-address\": \"0x1234567890abcdef1234567890abcdef12345678\",\n      \"created-at\": \"2024-01-15T10:30:00Z\",\n      \"asset\": \"eth-base/brlv\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37bb49de-4b70-4b90-ad20-5e3813a8aa7f",
+              "name": "Bad request - Invalid input parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source-address",
+                      "value": "0xabcdef1234567890abcdef1234567890abcdef12"
+                    },
+                    {
+                      "key": "target-address",
+                      "value": "0x1234567890abcdef1234567890abcdef12345678"
+                    },
+                    {
+                      "key": "asset",
+                      "value": "eth-base/brlv"
+                    },
+                    {
+                      "key": "state",
+                      "value": "completed"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03e9ef44-f3a4-42b1-8696-98d3c3275494",
+              "name": "Forbidden - Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source-address",
+                      "value": "0xabcdef1234567890abcdef1234567890abcdef12"
+                    },
+                    {
+                      "key": "target-address",
+                      "value": "0x1234567890abcdef1234567890abcdef12345678"
+                    },
+                    {
+                      "key": "asset",
+                      "value": "eth-base/brlv"
+                    },
+                    {
+                      "key": "state",
+                      "value": "completed"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "316223e1-2be9-41ec-ba25-908434612a65",
+              "name": "Not found - Resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source-address",
+                      "value": "0xabcdef1234567890abcdef1234567890abcdef12"
+                    },
+                    {
+                      "key": "target-address",
+                      "value": "0x1234567890abcdef1234567890abcdef12345678"
+                    },
+                    {
+                      "key": "asset",
+                      "value": "eth-base/brlv"
+                    },
+                    {
+                      "key": "state",
+                      "value": "completed"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3502a061-00ac-4810-bbdd-f0239e02d901",
+              "name": "Unprocessable entity - Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source-address",
+                      "value": "0xabcdef1234567890abcdef1234567890abcdef12"
+                    },
+                    {
+                      "key": "target-address",
+                      "value": "0x1234567890abcdef1234567890abcdef12345678"
+                    },
+                    {
+                      "key": "asset",
+                      "value": "eth-base/brlv"
+                    },
+                    {
+                      "key": "state",
+                      "value": "completed"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "005cc9d7-d935-4660-9942-761e7f5bfb4a",
+          "name": "Transfer tokens between wallets",
+          "request": {
+            "name": "Transfer tokens between wallets",
+            "description": {
+              "content": "Transfer tokens from a source wallet to a target wallet. Both source and target should be EVM wallet addresses (0x...).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v0",
+                "transfers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source-address\": \"<string>\",\n  \"asset\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"target-address\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a533e2ca-2830-4bfb-94ac-aec66bb6c8ed",
+              "name": "Transfer created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source-address\": \"0xabcdef1234567890abcdef1234567890abcdef12\",\n  \"asset\": \"eth-base/brlv\",\n  \"amount\": \"<string>\",\n  \"target-address\": \"0x1234567890abcdef1234567890abcdef12345678\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transfer\": {\n    \"amount\": \"100.50\",\n    \"state-updated-at\": \"2024-01-15T10:30:00Z\",\n    \"tx-hash\": \"string\",\n    \"state\": \"created\",\n    \"source-address\": \"0xabcdef1234567890abcdef1234567890abcdef12\",\n    \"id\": \"660e8400-e29b-41d4-a716-446655440003\",\n    \"target-address\": \"0x1234567890abcdef1234567890abcdef12345678\",\n    \"created-at\": \"2024-01-15T10:30:00Z\",\n    \"asset\": \"eth-base/brlv\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f5946f38-d9bd-4c33-8518-18e7dd973ce9",
+              "name": "Bad request - Invalid input parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source-address\": \"0xabcdef1234567890abcdef1234567890abcdef12\",\n  \"asset\": \"eth-base/brlv\",\n  \"amount\": \"<string>\",\n  \"target-address\": \"0x1234567890abcdef1234567890abcdef12345678\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92e1256f-007a-4bb3-a555-38e7fbcdddfa",
+              "name": "Forbidden - Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source-address\": \"0xabcdef1234567890abcdef1234567890abcdef12\",\n  \"asset\": \"eth-base/brlv\",\n  \"amount\": \"<string>\",\n  \"target-address\": \"0x1234567890abcdef1234567890abcdef12345678\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e52283a-6512-41ad-b241-89a72fd3160f",
+              "name": "Not found - Resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source-address\": \"0xabcdef1234567890abcdef1234567890abcdef12\",\n  \"asset\": \"eth-base/brlv\",\n  \"amount\": \"<string>\",\n  \"target-address\": \"0x1234567890abcdef1234567890abcdef12345678\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8060461-9fe6-448b-917c-612d133c988f",
+              "name": "Unprocessable entity - Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source-address\": \"0xabcdef1234567890abcdef1234567890abcdef12\",\n  \"asset\": \"eth-base/brlv\",\n  \"amount\": \"<string>\",\n  \"target-address\": \"0x1234567890abcdef1234567890abcdef12345678\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.crown-brlv.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ccc4b6cd-ff17-4070-9537-d5784d7f8a39",
+    "name": "Crown API & Webhooks Accounts Transfers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Open API 3 docs for Crown API\n\nWebhook events that Crown will POST to your configured endpoint URL. All webhooks expect a 200 OK response. Payloads use kebab-case for all keys to match the Crown API conventions.",
+      "type": "text/plain"
+    }
+  }
+}

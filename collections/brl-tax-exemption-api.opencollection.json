@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crown API & Webhooks Accounts Tax Exemption API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tax Exemption",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get monthly tax exemption progress",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v0/tax-exemption/progress"
+          },
+          "docs": "Returns the current month's tax exemption progress for Brazilian accounts. Shows the breakdown of disposals that count toward the R$35,000 monthly limit: resgates (claims) and outras alienações (burns and BRLV target-wallet transfers)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

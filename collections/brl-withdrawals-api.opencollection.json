@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crown API & Webhooks Accounts Withdrawals API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Withdrawals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a withdrawal by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v0/withdrawals/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves details of a specific withdrawal"
+        },
+        {
+          "info": {
+            "name": "List withdrawals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v0/withdrawals",
+            "params": [
+              {
+                "name": "asset",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset"
+              }
+            ]
+          },
+          "docs": "Lists all withdrawals for the authenticated account"
+        },
+        {
+          "info": {
+            "name": "Create a withdrawal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v0/withdrawals",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a withdrawal for fiat (PIX/TED) or tokens. For fiat BRL, use asset 'fiat/brl' with method 'pix' or 'ted'. For tokens, use asset like 'eth-base/usdc' with method 'token'."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

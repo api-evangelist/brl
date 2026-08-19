@@ -1,0 +1,117 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crown API & Webhooks Accounts Assets API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Assets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "DEPRECATED: Get a BRL withdrawal by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v0/assets/:asset/withdrawals/:id",
+            "params": [
+              {
+                "name": "asset",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "DEPRECATED: Use /withdrawals/:id instead. Retrieves a specific BRL withdrawal by its ID for the authenticated account."
+        },
+        {
+          "info": {
+            "name": "DEPRECATED: List BRL withdrawals by asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v0/assets/:asset/withdrawals",
+            "params": [
+              {
+                "name": "asset",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "DEPRECATED: Use /withdrawals instead. Retrieves a list of all BRL withdrawals for the authenticated user."
+        },
+        {
+          "info": {
+            "name": "DEPRECATED: Create a BRL withdrawal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v0/assets/:asset/withdrawals",
+            "params": [
+              {
+                "name": "asset",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "DEPRECATED: Use /withdrawals instead. Creates a BRL withdrawal with PIX or TED methods. For PIX withdrawals, only a pix-key is required. For TED withdrawals, full bank account details are required."
+        },
+        {
+          "info": {
+            "name": "List deposits by asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v0/assets/:asset/deposits",
+            "params": [
+              {
+                "name": "asset",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves a list of deposits for the authenticated user for a specific asset type. Asset can be 'brl', 'usd', 'usdc' or 'usdt'"
+        },
+        {
+          "info": {
+            "name": "Get balance by asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v0/assets/:asset/balance",
+            "params": [
+              {
+                "name": "asset",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the authenticated account's balance for a given asset. The balance is returned at the asset's decimal scale (brl=2, usdc=6, brlv=18)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

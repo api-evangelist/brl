@@ -1,0 +1,805 @@
+{
+  "item": [
+    {
+      "id": "48216db8-72ca-4898-89b9-69cfebd17744",
+      "name": "Orders",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "02c85d5d-94d7-4d50-ae6d-b050586c3fb5",
+          "name": "List all orders",
+          "request": {
+            "name": "List all orders",
+            "description": {
+              "content": "Retrieves a list of all orders for the authenticated user",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v0",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "559f1921-14ef-404e-a096-2f21b2b47345",
+              "name": "Orders list retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orders\": [\n    {\n      \"base-rate\": \"1.0000\",\n      \"state-updated-at\": \"2024-01-15T10:30:00Z\",\n      \"effective-rate\": \"0.9950\",\n      \"state\": \"created\",\n      \"target-asset\": \"eth-base/brlv\",\n      \"id\": \"660e8400-e29b-41d4-a716-446655440001\",\n      \"quote-id\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"source-asset\": \"fiat/brl\",\n      \"source-amount\": \"100.50\",\n      \"created-at\": \"2024-01-15T10:30:00Z\",\n      \"target-amount\": \"99.75\",\n      \"qr-code-base64\": \"string\",\n      \"fee-amount\": \"0.50\",\n      \"expiration\": \"2024-01-15T10:30:00Z\",\n      \"fee-asset\": \"fiat/brl\",\n      \"brcode\": \"00020101021226890014br.gov.bcb.pix...\"\n    },\n    {\n      \"base-rate\": \"1.0000\",\n      \"state-updated-at\": \"2024-01-15T10:30:00Z\",\n      \"effective-rate\": \"0.9950\",\n      \"state\": \"created\",\n      \"target-asset\": \"eth-base/brlv\",\n      \"id\": \"660e8400-e29b-41d4-a716-446655440001\",\n      \"quote-id\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"source-asset\": \"fiat/brl\",\n      \"source-amount\": \"100.50\",\n      \"created-at\": \"2024-01-15T10:30:00Z\",\n      \"target-amount\": \"99.75\",\n      \"qr-code-base64\": \"string\",\n      \"fee-amount\": \"0.50\",\n      \"expiration\": \"2024-01-15T10:30:00Z\",\n      \"fee-asset\": \"fiat/brl\",\n      \"brcode\": \"00020101021226890014br.gov.bcb.pix...\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b79d5cf1-ab23-4bbb-b63c-ac0ed8512826",
+              "name": "Bad request - Invalid input parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a0c1e68-666c-45c5-8956-7626851536a8",
+              "name": "Forbidden - Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "666da58e-11cb-46b7-81df-5ec1c63cbcb5",
+              "name": "Not found - Resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8ed4a99-a33f-4c61-b7c4-f253de60f0ba",
+              "name": "Unprocessable entity - Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "295407c3-b196-4cd7-b484-5e3349587dae",
+          "name": "Create an order from a quote",
+          "request": {
+            "name": "Create an order from a quote",
+            "description": {
+              "content": "Creates an order by accepting a quote. Wallet addresses are required only for token assets (eth-base/brlv, eth-mainnet/brlv, eth-base/wbrly). For fiat assets (fiat/brl, fiat/usd), no wallet addresses are needed. Use source-wallet-address for the source wallet and target-wallet-address for the destination wallet.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v0",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quote-id\": \"<uuid>\",\n  \"source-wallet-address\": \"<string>\",\n  \"target-wallet-address\": \"<string>\",\n  \"target-end-user-pix-key\": \"<string>\",\n  \"source-payment-method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d9d16755-53bb-4c47-ae29-16ffdaff8c26",
+              "name": "Order created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quote-id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"source-wallet-address\": \"0x742d35Cc6635C0532925a3b8D295FD6C6e7e2c2c\",\n  \"target-wallet-address\": \"0x742d35Cc6635C0532925a3b8D295FD6C6e7e2c2c\",\n  \"target-end-user-pix-key\": \"user@example.com\",\n  \"source-payment-method\": \"brcode\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"order\": {\n    \"base-rate\": \"1.0000\",\n    \"state-updated-at\": \"2024-01-15T10:30:00Z\",\n    \"effective-rate\": \"0.9950\",\n    \"state\": \"created\",\n    \"target-asset\": \"eth-base/brlv\",\n    \"id\": \"660e8400-e29b-41d4-a716-446655440001\",\n    \"quote-id\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"source-asset\": \"fiat/brl\",\n    \"source-amount\": \"100.50\",\n    \"created-at\": \"2024-01-15T10:30:00Z\",\n    \"target-amount\": \"99.75\",\n    \"qr-code-base64\": \"string\",\n    \"fee-amount\": \"0.50\",\n    \"expiration\": \"2024-01-15T10:30:00Z\",\n    \"fee-asset\": \"fiat/brl\",\n    \"brcode\": \"00020101021226890014br.gov.bcb.pix...\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "828d6ab0-420b-4674-a87e-0af32b608fa8",
+              "name": "Bad request - Invalid input parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quote-id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"source-wallet-address\": \"0x742d35Cc6635C0532925a3b8D295FD6C6e7e2c2c\",\n  \"target-wallet-address\": \"0x742d35Cc6635C0532925a3b8D295FD6C6e7e2c2c\",\n  \"target-end-user-pix-key\": \"user@example.com\",\n  \"source-payment-method\": \"brcode\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc085a6c-659b-496e-a2b2-23c7e543fa0d",
+              "name": "Forbidden - Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quote-id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"source-wallet-address\": \"0x742d35Cc6635C0532925a3b8D295FD6C6e7e2c2c\",\n  \"target-wallet-address\": \"0x742d35Cc6635C0532925a3b8D295FD6C6e7e2c2c\",\n  \"target-end-user-pix-key\": \"user@example.com\",\n  \"source-payment-method\": \"brcode\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e99b8a3b-cc1d-46d1-828a-b13f18286e2a",
+              "name": "Not found - Resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quote-id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"source-wallet-address\": \"0x742d35Cc6635C0532925a3b8D295FD6C6e7e2c2c\",\n  \"target-wallet-address\": \"0x742d35Cc6635C0532925a3b8D295FD6C6e7e2c2c\",\n  \"target-end-user-pix-key\": \"user@example.com\",\n  \"source-payment-method\": \"brcode\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0bbbddc-041d-4d3c-a2e8-c9d2d7c92352",
+              "name": "Unprocessable entity - Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quote-id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"source-wallet-address\": \"0x742d35Cc6635C0532925a3b8D295FD6C6e7e2c2c\",\n  \"target-wallet-address\": \"0x742d35Cc6635C0532925a3b8D295FD6C6e7e2c2c\",\n  \"target-end-user-pix-key\": \"user@example.com\",\n  \"source-payment-method\": \"brcode\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e4d2bf4-1ef3-42fb-97e5-076948b0e8ec",
+          "name": "Get an order by ID",
+          "request": {
+            "name": "Get an order by ID",
+            "description": {
+              "content": "Retrieves a specific order by its ID for the authenticated account",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v0",
+                "orders",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1ddb75aa-b86a-472c-8ce4-7d63fef5d524",
+              "name": "Order retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"order\": {\n    \"base-rate\": \"1.0000\",\n    \"state-updated-at\": \"2024-01-15T10:30:00Z\",\n    \"effective-rate\": \"0.9950\",\n    \"state\": \"created\",\n    \"target-asset\": \"eth-base/brlv\",\n    \"id\": \"660e8400-e29b-41d4-a716-446655440001\",\n    \"quote-id\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"source-asset\": \"fiat/brl\",\n    \"source-amount\": \"100.50\",\n    \"created-at\": \"2024-01-15T10:30:00Z\",\n    \"target-amount\": \"99.75\",\n    \"qr-code-base64\": \"string\",\n    \"fee-amount\": \"0.50\",\n    \"expiration\": \"2024-01-15T10:30:00Z\",\n    \"fee-asset\": \"fiat/brl\",\n    \"brcode\": \"00020101021226890014br.gov.bcb.pix...\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0637df98-c600-41cf-b7c0-38cd80bc14dc",
+              "name": "Bad request - Invalid input parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0eedec2a-575c-4260-a0e9-e77b870ab55f",
+              "name": "Forbidden - Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6265a16d-bd1f-4d9d-abee-e4a462056c1f",
+              "name": "Not found - Resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b6a89ca-52ae-4e3e-aab0-e681be4aea73",
+              "name": "Unprocessable entity - Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.crown-brlv.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a1b027d2-44e2-46d5-a3d1-9eaab4ad0293",
+    "name": "Crown API & Webhooks Accounts Orders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Open API 3 docs for Crown API\n\nWebhook events that Crown will POST to your configured endpoint URL. All webhooks expect a 200 OK response. Payloads use kebab-case for all keys to match the Crown API conventions.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -2,12 +2,10 @@ generated: '2026-07-18'
 method: derived
 status: candidate
 source: openapi/brl-openapi-original.json
-note: >-
-  No official hosted/remote MCP server was found for Crown. This is a CANDIDATE
-  tool list derived from the current v1 REST surface (the OpenAPI declares no
-  operationIds, so each tool is grounded in a real HTTP method + path). Auth for
-  any generated server must mint the per-request self-signed RS256 JWT plus the
-  X-API-Key header (see authentication/brl-authentication.yml).
+note: No official hosted/remote MCP server was found for Crown. This is a CANDIDATE tool list derived
+  from the current v1 REST surface (the OpenAPI declares no operationIds, so each tool is grounded in
+  a real HTTP method + path). Auth for any generated server must mint the per-request self-signed RS256
+  JWT plus the X-API-Key header (see authentication/brl-authentication.yml).
 server:
   name: crown
   transport: http
@@ -83,3 +81,9 @@ tools:
 - name: get_tax_exemption_progress
   description: Get current-month Brazilian tax-exemption progress toward the R$35,000 limit.
   source_operation: GET /api/v1/accounts/{account-id}/tax-exemption/progress
+deployment:
+  mode: none
+  verified: derived
+  tools: 23
+  checked: '2026-08-12'
+  source: catalog MCP census

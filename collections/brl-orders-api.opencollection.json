@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crown API & Webhooks Accounts Orders API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v0/orders"
+          },
+          "docs": "Retrieves a list of all orders for the authenticated user"
+        },
+        {
+          "info": {
+            "name": "Create an order from a quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v0/orders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an order by accepting a quote. Wallet addresses are required only for token assets (eth-base/brlv, eth-mainnet/brlv, eth-base/wbrly). For fiat assets (fiat/brl, fiat/usd), no wallet addresses are needed. Use source-wallet-address for the source wallet and target-wallet-address for the destination wallet."
+        },
+        {
+          "info": {
+            "name": "Get an order by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v0/orders/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves a specific order by its ID for the authenticated account"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

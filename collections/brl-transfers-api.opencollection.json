@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crown API & Webhooks Accounts Transfers API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transfers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List transfers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v0/transfers",
+            "params": [
+              {
+                "name": "source-address",
+                "value": "",
+                "type": "query",
+                "description": "Filter by source wallet address"
+              },
+              {
+                "name": "target-address",
+                "value": "",
+                "type": "query",
+                "description": "Filter by target wallet address"
+              },
+              {
+                "name": "asset",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filter by transfer state"
+              }
+            ]
+          },
+          "docs": "Retrieves a list of token transfers for the authenticated user. Can be filtered by source-address, target-address, asset, or state."
+        },
+        {
+          "info": {
+            "name": "Transfer tokens between wallets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v0/transfers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Transfer tokens from a source wallet to a target wallet. Both source and target should be EVM wallet addresses (0x...)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

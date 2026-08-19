@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crown API & Webhooks Accounts Claims API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Claims",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get claimable balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v0/claims"
+          },
+          "docs": "Returns the total available balance that can be claimed"
+        },
+        {
+          "info": {
+            "name": "Submit a claim request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v0/claims",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a claim for a specified amount from reward certificates"
+        },
+        {
+          "info": {
+            "name": "List claimable reward certificates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v0/claims/certificates"
+          },
+          "docs": "Returns a list of reward certificates with their claimable amounts"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

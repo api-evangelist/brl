@@ -1,0 +1,307 @@
+{
+  "item": [
+    {
+      "id": "9f41f45e-31df-4632-bd19-78f3c6f986af",
+      "name": "Quotes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "38541542-a8eb-459d-a81b-505837ecd5e1",
+          "name": "Create a quote for currency/token conversion",
+          "request": {
+            "name": "Create a quote for currency/token conversion",
+            "description": {
+              "content": "Creates a quote for converting between different assets (fiat currencies and tokens). Either source-amount OR target-amount must be provided, but not both.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v0",
+                "quotes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source-asset\": \"<string>\",\n  \"target-asset\": \"<string>\",\n  \"source-amount\": \"<string>\",\n  \"target-amount\": \"<string>\",\n  \"trade-reason\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "be569635-4388-4f06-a19c-f2b1a5d4e314",
+              "name": "Quote created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source-asset\": \"fiat/brl\",\n  \"target-asset\": \"eth-base/usdc\",\n  \"source-amount\": \"<string>\",\n  \"target-amount\": \"<string>\",\n  \"trade-reason\": \"transfer-between-same-entity-accounts\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"expires-at\": \"2024-01-15T10:30:00Z\",\n  \"target-asset\": \"eth-base/usdc\",\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"source-asset\": \"fiat/brl\",\n  \"source-amount\": \"1000.00\",\n  \"created-at\": \"2024-01-15T10:30:00Z\",\n  \"pricing\": {\n    \"base-rate\": {\n      \"amount\": \"5.1307200000\",\n      \"base\": \"USDC\",\n      \"quote\": \"BRL\"\n    },\n    \"spread\": {\n      \"amount\": \"7.95\",\n      \"asset\": \"fiat/brl\",\n      \"bps\": 80\n    },\n    \"fee\": {\n      \"amount\": \"2.00\",\n      \"asset\": \"fiat/brl\",\n      \"kind\": \"fixed\"\n    },\n    \"iof\": {\n      \"amount\": \"0.00\",\n      \"asset\": \"fiat/brl\",\n      \"applicable\": false,\n      \"basis-ref\": \"psav-res-521-2025\"\n    }\n  },\n  \"target-amount\": \"194.914826\",\n  \"vet\": {\n    \"amount\": \"5.1307200000\",\n    \"base\": \"USDC\",\n    \"quote\": \"BRL\"\n  },\n  \"trade-reason-code\": \"67995\",\n  \"trade-reason\": \"transfer-between-same-entity-accounts\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e743b757-c4ea-4d36-ac08-cfb4fd8e0ec2",
+              "name": "Bad request - Invalid input parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source-asset\": \"fiat/brl\",\n  \"target-asset\": \"eth-base/usdc\",\n  \"source-amount\": \"<string>\",\n  \"target-amount\": \"<string>\",\n  \"trade-reason\": \"transfer-between-same-entity-accounts\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11888d86-dea2-4222-bfd0-84c01a6bea83",
+              "name": "Forbidden - Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source-asset\": \"fiat/brl\",\n  \"target-asset\": \"eth-base/usdc\",\n  \"source-amount\": \"<string>\",\n  \"target-amount\": \"<string>\",\n  \"trade-reason\": \"transfer-between-same-entity-accounts\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62f6b2b2-113c-4b75-8e67-5b4764c0c9f6",
+              "name": "Not found - Resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source-asset\": \"fiat/brl\",\n  \"target-asset\": \"eth-base/usdc\",\n  \"source-amount\": \"<string>\",\n  \"target-amount\": \"<string>\",\n  \"trade-reason\": \"transfer-between-same-entity-accounts\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a1ed419-34b2-4b9e-808b-2efd3f3e1581",
+              "name": "Unprocessable entity - Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v0",
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source-asset\": \"fiat/brl\",\n  \"target-asset\": \"eth-base/usdc\",\n  \"source-amount\": \"<string>\",\n  \"target-amount\": \"<string>\",\n  \"trade-reason\": \"transfer-between-same-entity-accounts\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.crown-brlv.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2d7a9aa6-6c4e-41a2-b5e8-013794a84980",
+    "name": "Crown API & Webhooks Accounts Quotes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Open API 3 docs for Crown API\n\nWebhook events that Crown will POST to your configured endpoint URL. All webhooks expect a 200 OK response. Payloads use kebab-case for all keys to match the Crown API conventions.",
+      "type": "text/plain"
+    }
+  }
+}

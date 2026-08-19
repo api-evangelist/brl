@@ -1,0 +1,138 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crown API & Webhooks Accounts Wallets API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Wallets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get claimable balance for a wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v0/wallets/:wallet-address/claims",
+            "params": [
+              {
+                "name": "wallet-address",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the available balance that can be claimed from reward certificates held by the given wallet address."
+        },
+        {
+          "info": {
+            "name": "Submit a claim request for a wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v0/wallets/:wallet-address/claims",
+            "params": [
+              {
+                "name": "wallet-address",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a claim for a specified amount from reward certificates held by the given wallet address. FIFO allocation is restricted to certificates at this wallet."
+        },
+        {
+          "info": {
+            "name": "List wallets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v0/wallets",
+            "params": [
+              {
+                "name": "assets",
+                "value": "",
+                "type": "query",
+                "description": "Filter wallets by asset types"
+              },
+              {
+                "name": "addresses",
+                "value": "",
+                "type": "query",
+                "description": "Filter wallets by specific addresses"
+              }
+            ]
+          },
+          "docs": "Returns a list of wallets. Can be filtered by assets and/or addresses."
+        },
+        {
+          "info": {
+            "name": "Create a new wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v0/wallets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new wallet with the specified name and default assets (BRLV and wBRLY if applicable)."
+        },
+        {
+          "info": {
+            "name": "Update wallet metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.crown-brlv.com/api/v0/wallets/:wallet-id/metadata",
+            "params": [
+              {
+                "name": "wallet-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the metadata and/or UI visibility for a specific wallet owned by the authenticated user."
+        },
+        {
+          "info": {
+            "name": "List claimable reward certificates for a wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v0/wallets/:wallet-address/claims/certificates",
+            "params": [
+              {
+                "name": "wallet-address",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the reward certificates with their claimable amounts for the given wallet address."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

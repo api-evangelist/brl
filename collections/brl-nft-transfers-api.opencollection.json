@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crown API & Webhooks Accounts Nft Transfers API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Nft Transfers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List reward certificate NFT transfers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v0/nft-transfers"
+          },
+          "docs": "Retrieves a list of reward certificate NFT transfers for the authenticated user."
+        },
+        {
+          "info": {
+            "name": "Transfer reward certificate NFT between wallets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v0/nft-transfers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Transfers a reward certificate NFT from a source wallet to a target wallet. Source and target should be EVM wallet addresses (0x...)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

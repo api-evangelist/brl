@@ -1,0 +1,900 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Crown API & Webhooks Accounts API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get an auto-claim schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/auto-claims/:schedule-id",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schedule-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a single auto-claim schedule by ID. Requires the auto-claim-rewards capability."
+        },
+        {
+          "info": {
+            "name": "Cancel an auto-claim schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/auto-claims/:schedule-id",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schedule-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Cancels a recurring auto-claim schedule and unschedules its job. Requires the auto-claim-rewards capability."
+        },
+        {
+          "info": {
+            "name": "Create a quote for currency/token conversion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/quotes",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a quote for converting between different assets (fiat currencies and tokens). Either source-amount OR target-amount must be provided, but not both."
+        },
+        {
+          "info": {
+            "name": "Get an order by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/orders/:id",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves a specific order by its ID for the authenticated account"
+        },
+        {
+          "info": {
+            "name": "List all orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/orders",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all orders for the authenticated user"
+        },
+        {
+          "info": {
+            "name": "Create an order from a quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/orders",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an order by accepting a quote. Wallet addresses are required only for token assets (eth-base/brlv, eth-mainnet/brlv, eth-base/wbrly). For fiat assets (fiat/brl, fiat/usd), no wallet addresses are needed. Use source-wallet-address for the source wallet and target-wallet-address for the destination wallet."
+        },
+        {
+          "info": {
+            "name": "List claimable reward certificates for a wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/wallets/:wallet-address/claims/certificates",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "wallet-address",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the reward certificates with their claimable amounts for the given wallet address."
+        },
+        {
+          "info": {
+            "name": "List deposits by asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/assets/:asset/deposits",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "asset",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves a list of deposits for the authenticated user for a specific asset type. Asset can be 'brl', 'usd', 'usdc' or 'usdt'"
+        },
+        {
+          "info": {
+            "name": "Get monthly tax exemption progress",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/tax-exemption/progress",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the current month's tax exemption progress for Brazilian accounts. Shows the breakdown of disposals that count toward the R$35,000 monthly limit: resgates (claims) and outras alienações (burns and BRLV target-wallet transfers)."
+        },
+        {
+          "info": {
+            "name": "List transfers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/transfers",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "source-address",
+                "value": "",
+                "type": "query",
+                "description": "Filter by source wallet address"
+              },
+              {
+                "name": "target-address",
+                "value": "",
+                "type": "query",
+                "description": "Filter by target wallet address"
+              },
+              {
+                "name": "asset",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filter by transfer state"
+              }
+            ]
+          },
+          "docs": "Retrieves a list of token transfers for the authenticated user. Can be filtered by source-address, target-address, asset, or state."
+        },
+        {
+          "info": {
+            "name": "Transfer tokens between wallets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/transfers",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Transfer tokens from a source wallet to a target wallet. Both source and target should be EVM wallet addresses (0x...)."
+        },
+        {
+          "info": {
+            "name": "Update wallet metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/wallets/:wallet-id/metadata",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "wallet-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the metadata and/or UI visibility for a specific wallet owned by the authenticated user."
+        },
+        {
+          "info": {
+            "name": "Get claimable balance for a wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/wallets/:wallet-address/claims",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "wallet-address",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the available balance that can be claimed from reward certificates held by the given wallet address."
+        },
+        {
+          "info": {
+            "name": "Submit a claim request for a wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/wallets/:wallet-address/claims",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "wallet-address",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a claim for a specified amount from reward certificates held by the given wallet address. FIFO allocation is restricted to certificates at this wallet."
+        },
+        {
+          "info": {
+            "name": "List withdrawals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/withdrawals",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "asset",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset"
+              }
+            ]
+          },
+          "docs": "Lists all withdrawals for the authenticated account"
+        },
+        {
+          "info": {
+            "name": "Create a withdrawal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/withdrawals",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a withdrawal for fiat (PIX/TED) or tokens. For fiat BRL, use asset 'fiat/brl' with method 'pix' or 'ted'. For tokens, use asset like 'eth-base/usdc' with method 'token'."
+        },
+        {
+          "info": {
+            "name": "List claimable reward certificates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/claims/certificates",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a list of reward certificates with their claimable amounts"
+        },
+        {
+          "info": {
+            "name": "Remove an auto-claim skip window",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/auto-claims/:schedule-id/skips/:skip-id",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schedule-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "skip-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a skip window so the schedule runs again on those dates. Requires the auto-claim-rewards capability."
+        },
+        {
+          "info": {
+            "name": "Get balance by asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/assets/:asset/balance",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "asset",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the account's balance for a given asset."
+        },
+        {
+          "info": {
+            "name": "List accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts"
+          },
+          "docs": "Lists the authenticated account together with its sub-accounts. The caller's own record always comes first, with a null parent-id. Sub-accounts (every account whose parent is the caller, each carrying the caller's id as its parent-id) are included only for callers with the manage-holders capability; without it, the response contains the caller alone. Requires API access."
+        },
+        {
+          "info": {
+            "name": "Create a sub-account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v1/accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Requests creation of a known-taxpayer individual sub-account under the authenticated partner account. Request-first: the request enters compliance review and the sub-account is provisioned on approval. Requires the manage-holders capability."
+        },
+        {
+          "info": {
+            "name": "List auto-claim skip windows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/auto-claims/:schedule-id/skips",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schedule-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the active skip windows for the schedule. Requires the auto-claim-rewards capability."
+        },
+        {
+          "info": {
+            "name": "Skip an auto-claim on a date or period",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/auto-claims/:schedule-id/skips",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schedule-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Suppresses the schedule's runs on a single date or across an inclusive date range without deleting it; runs resume automatically after the window. Requires the auto-claim-rewards capability."
+        },
+        {
+          "info": {
+            "name": "List auto-claim schedules for a wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/wallets/:wallet-address/auto-claims",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "wallet-address",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the recurring auto-claim schedules configured for the given wallet address. Requires the auto-claim-rewards capability."
+        },
+        {
+          "info": {
+            "name": "Create a wallet-scoped auto-claim schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/wallets/:wallet-address/auto-claims",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "wallet-address",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Schedules a recurring claim of up to the given amount on a UNIX cron (at least daily) from reward certificates held by the given wallet address. Requires the auto-claim-rewards capability."
+        },
+        {
+          "info": {
+            "name": "Resume a paused auto-claim schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/auto-claims/:schedule-id/resume",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schedule-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Re-enables a paused schedule so it claims again on its next fires. Requires the auto-claim-rewards capability."
+        },
+        {
+          "info": {
+            "name": "Get an account by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Fetches a single account by ID. The account must be either the authenticated account itself or one of its sub-accounts (an account whose parent is the caller); any other id is rejected by the access check. Returns the account's profile, status, type, and capabilities."
+        },
+        {
+          "info": {
+            "name": "Get a deposit by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/assets/:asset/deposits/:id",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "asset",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves a specific deposit by its ID for the authenticated account. Asset can be 'brl', 'usd', 'usdc' or 'usdt'"
+        },
+        {
+          "info": {
+            "name": "Get the PIX deposit QR code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/deposits/pix",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the static PIX BR Code used to fund the account's BRL balance: the EMV payload string and a base64-encoded PNG of the QR image."
+        },
+        {
+          "info": {
+            "name": "Pause an auto-claim schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/auto-claims/:schedule-id/pause",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schedule-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Stops a schedule from claiming on its next fires without deleting it; its job stays scheduled so it can be resumed. Requires the auto-claim-rewards capability."
+        },
+        {
+          "info": {
+            "name": "Get a withdrawal by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/withdrawals/:id",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves details of a specific withdrawal"
+        },
+        {
+          "info": {
+            "name": "Get claimable balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/claims",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the total available balance that can be claimed"
+        },
+        {
+          "info": {
+            "name": "Submit a claim request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/claims",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a claim for a specified amount from reward certificates"
+        },
+        {
+          "info": {
+            "name": "List auto-claim schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/auto-claims",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the account's recurring auto-claim schedules (account- and wallet-scoped). Requires the auto-claim-rewards capability."
+        },
+        {
+          "info": {
+            "name": "Create an account-wide auto-claim schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/auto-claims",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Schedules a recurring claim of up to the given amount on a UNIX cron (at least daily) across all of the account's reward certificates. Requires the auto-claim-rewards capability."
+        },
+        {
+          "info": {
+            "name": "List reward certificate NFT transfers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/nft-transfers",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves a list of reward certificate NFT transfers for the authenticated user."
+        },
+        {
+          "info": {
+            "name": "Transfer reward certificate NFT between wallets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/nft-transfers",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Transfers a reward certificate NFT from a source wallet to a target wallet. Source and target should be EVM wallet addresses (0x...)."
+        },
+        {
+          "info": {
+            "name": "List wallets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/wallets",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "assets",
+                "value": "",
+                "type": "query",
+                "description": "Filter wallets by asset types"
+              },
+              {
+                "name": "addresses",
+                "value": "",
+                "type": "query",
+                "description": "Filter wallets by specific addresses"
+              }
+            ]
+          },
+          "docs": "Returns a list of wallets. Can be filtered by assets and/or addresses."
+        },
+        {
+          "info": {
+            "name": "Create a new wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.crown-brlv.com/api/v1/accounts/:account-id/wallets",
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new wallet with the specified name and default assets (BRLV and wBRLY if applicable)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
