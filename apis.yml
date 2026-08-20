@@ -40,6 +40,18 @@ modified: '2026-07-18'
 tags:
 - Company
 - Crypto
+- Stablecoins
+- Payments
+- Brazil
+- Pix
+- Fintech
+- Blockchain
+- Digital Assets
+- Wallets
+- Yield
+tags_raw:
+- Company
+- Crypto
 - Stablecoin
 - Payments
 - Brazil
@@ -57,6 +69,8 @@ apis:
   humanURL: https://docs.crown-brlv.com/
   baseURL: https://app.crown-brlv.com
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -137,6 +151,8 @@ apis:
   humanURL: https://docs.crown-brlv.com/
   baseURL: https://app.crown-brlv.com
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
