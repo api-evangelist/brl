@@ -1,0 +1,778 @@
+openapi: 3.2.0
+info:
+  title: Crown API & Webhooks API
+  version: 1.0.0
+  description: 'Open API 3 docs for Crown API
+
+
+    Webhook events that Crown will POST to your configured endpoint URL. All webhooks expect a 200 OK response. Payloads use kebab-case for all keys to match the Crown API conventions.'
+servers:
+- url: https://app.crown-brlv.com
+  description: Production server
+tags:
+- name: Crown API & Webhooks
+paths: {}
+webhooks:
+  deposit-processed:
+    post:
+      summary: Deposit Processed
+      description: Triggered when a deposit is credited to the account. This covers fiat deposits (BRL via PIX or TED) and crypto deposits. A token (USDC, USDT, or BRLV) transferred into one of the account's wallets is also treated as a deposit, and carries the crypto payload variant with the asset and on-chain addresses.
+      operationId: depositProcessed
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - event-id
+              - event-type
+              - payload
+              properties:
+                event-id:
+                  type: string
+                  format: uuid
+                  description: Unique identifier for this webhook event
+                event-type:
+                  type: string
+                  enum:
+                  - deposit-processed
+                payload:
+                  oneOf:
+                  - type: object
+                    properties:
+                      amount:
+                        type: string
+                        format: decimal
+                        title: Amount
+                      tx-hash:
+                        type: string
+                        title: Tx Hash
+                      deposit-type:
+                        type: string
+                        title: Deposit Type
+                      source-address:
+                        type: string
+                        title: Source Address
+                      account-id:
+                        type: string
+                        format: uuid
+                        title: Account Id
+                      status:
+                        type: string
+                        title: Status
+                      target-address:
+                        type: string
+                        title: Target Address
+                      deposit-id:
+                        type: string
+                        format: uuid
+                        title: Deposit Id
+                      created-at:
+                        type: string
+                        title: Created At
+                      asset:
+                        type: string
+                        title: Asset
+                    additionalProperties: false
+                    required:
+                    - amount
+                    - deposit-type
+                    - source-address
+                    - account-id
+                    - status
+                    - target-address
+                    - deposit-id
+                    - created-at
+                    - asset
+                  - type: object
+                    properties:
+                      amount:
+                        type: string
+                        format: decimal
+                        title: Amount
+                      source-legal-name:
+                        type: string
+                        title: Source Legal Name
+                      source-tax-id:
+                        type: string
+                        title: Source Tax Id
+                      deposit-type:
+                        type: string
+                        title: Deposit Type
+                      source-account-number:
+                        type: string
+                        title: Source Account Number
+                      source-bank-code:
+                        type: string
+                        title: Source Bank Code
+                      account-id:
+                        type: string
+                        format: uuid
+                        title: Account Id
+                      processed-at:
+                        type: string
+                        title: Processed At
+                      status:
+                        type: string
+                        title: Status
+                      deposit-id:
+                        type: string
+                        format: uuid
+                        title: Deposit Id
+                      source-branch-code:
+                        type: string
+                        title: Source Branch Code
+                    additionalProperties: false
+                    required:
+                    - amount
+                    - source-legal-name
+                    - source-tax-id
+                    - deposit-type
+                    - source-account-number
+                    - source-bank-code
+                    - account-id
+                    - processed-at
+                    - status
+                    - deposit-id
+                    - source-branch-code
+              example:
+                event-id: 660e8400-e29b-41d4-a716-446655440010
+                event-type: deposit-processed
+                payload:
+                  amount: '1000.00'
+                  source-legal-name: João Silva
+                  source-tax-id: '12345678900'
+                  deposit-type: pix
+                  source-account-number: '12345'
+                  source-bank-code: '001'
+                  account-id: 660e8400-e29b-41d4-a716-446655440001
+                  processed-at: '2024-01-15T10:30:00Z'
+                  status: processed
+                  deposit-id: 660e8400-e29b-41d4-a716-446655440000
+                  source-branch-code: '0001'
+      responses:
+        '200':
+          description: Webhook received successfully
+      tags:
+      - Crown API & Webhooks
+  order-completed:
+    post:
+      summary: Order Completed
+      description: Triggered when a currency conversion order has been successfully completed.
+      operationId: orderCompleted
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - event-id
+              - event-type
+              - payload
+              properties:
+                event-id:
+                  type: string
+                  format: uuid
+                  description: Unique identifier for this webhook event
+                event-type:
+                  type: string
+                  enum:
+                  - order-completed
+                payload:
+                  type: object
+                  properties:
+                    tx-timestamp:
+                      type: string
+                      title: Tx Timestamp
+                    tx-hash:
+                      type: string
+                      title: Tx Hash
+                    effective-rate:
+                      type: string
+                      format: decimal
+                      title: Effective Rate
+                    target-asset:
+                      type: string
+                      title: Target Asset
+                    account-id:
+                      type: string
+                      format: uuid
+                      title: Account Id
+                    created-by:
+                      type: string
+                      format: uuid
+                      title: Created By
+                    order-id:
+                      type: string
+                      format: uuid
+                      title: Order Id
+                    source-asset:
+                      type: string
+                      title: Source Asset
+                    source-amount:
+                      type: string
+                      format: decimal
+                      title: Source Amount
+                    completed-at:
+                      type: string
+                      title: Completed At
+                    source-wallet-address:
+                      type: string
+                      title: Source Wallet Address
+                    target-wallet-address:
+                      type: string
+                      title: Target Wallet Address
+                    target-amount:
+                      type: string
+                      format: decimal
+                      title: Target Amount
+                  additionalProperties: false
+                  required:
+                  - effective-rate
+                  - target-asset
+                  - account-id
+                  - created-by
+                  - order-id
+                  - source-asset
+                  - source-amount
+                  - completed-at
+                  - target-amount
+              example:
+                event-id: 660e8400-e29b-41d4-a716-446655440011
+                event-type: order-completed
+                payload:
+                  tx-hash: 0xabc123...
+                  effective-rate: '0.995'
+                  target-asset: eth-base/brlv
+                  account-id: 660e8400-e29b-41d4-a716-446655440001
+                  created-by: 660e8400-e29b-41d4-a716-446655440003
+                  order-id: 660e8400-e29b-41d4-a716-446655440002
+                  source-asset: fiat/brl
+                  source-amount: '100.00'
+                  completed-at: '2024-01-15T10:35:00Z'
+                  source-wallet-address: '0x1234567890abcdef1234567890abcdef12345678'
+                  target-wallet-address: '0xabcdef1234567890abcdef1234567890abcdef12'
+                  target-amount: '99.50'
+      responses:
+        '200':
+          description: Webhook received successfully
+      tags:
+      - Crown API & Webhooks
+  token-transfer-completed:
+    post:
+      summary: Token Transfer Completed
+      description: Triggered when a token transfer sent from one of the account's wallets completes on-chain. A transfer moves tokens out of one of the account's wallets to a destination wallet.
+      operationId: tokenTransferCompleted
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - event-id
+              - event-type
+              - payload
+              properties:
+                event-id:
+                  type: string
+                  format: uuid
+                  description: Unique identifier for this webhook event
+                event-type:
+                  type: string
+                  enum:
+                  - token-transfer-completed
+                payload:
+                  type: object
+                  properties:
+                    amount:
+                      type: string
+                      format: decimal
+                      title: Amount
+                    transfer-id:
+                      type: string
+                      format: uuid
+                      title: Transfer Id
+                    tx-hash:
+                      type: string
+                      title: Tx Hash
+                    account-id:
+                      type: string
+                      format: uuid
+                      title: Account Id
+                    created-by:
+                      type: string
+                      format: uuid
+                      title: Created By
+                    completed-at:
+                      type: string
+                      title: Completed At
+                    source-wallet-address:
+                      type: string
+                      title: Source Wallet Address
+                    target-wallet-address:
+                      type: string
+                      title: Target Wallet Address
+                    asset:
+                      type: string
+                      title: Asset
+                  additionalProperties: false
+                  required:
+                  - amount
+                  - transfer-id
+                  - account-id
+                  - created-by
+                  - completed-at
+                  - asset
+              example:
+                event-id: 660e8400-e29b-41d4-a716-446655440012
+                event-type: token-transfer-completed
+                payload:
+                  amount: '50.00'
+                  transfer-id: 660e8400-e29b-41d4-a716-446655440004
+                  tx-hash: 0xdef456...
+                  account-id: 660e8400-e29b-41d4-a716-446655440001
+                  created-by: 660e8400-e29b-41d4-a716-446655440003
+                  completed-at: '2024-01-15T10:40:00Z'
+                  source-wallet-address: '0x1234567890abcdef1234567890abcdef12345678'
+                  target-wallet-address: '0xabcdef1234567890abcdef1234567890abcdef12'
+                  asset: eth-base/brlv
+      responses:
+        '200':
+          description: Webhook received successfully
+      tags:
+      - Crown API & Webhooks
+  withdraw-completed:
+    post:
+      summary: Withdrawal Completed
+      description: Triggered when a withdrawal (BRL PIX/TED or token) has been successfully processed and sent.
+      operationId: withdrawCompleted
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - event-id
+              - event-type
+              - payload
+              properties:
+                event-id:
+                  type: string
+                  format: uuid
+                  description: Unique identifier for this webhook event
+                event-type:
+                  type: string
+                  enum:
+                  - withdraw-completed
+                payload:
+                  oneOf:
+                  - type: object
+                    properties:
+                      withdraw-id:
+                        type: string
+                        format: uuid
+                        title: Withdraw Id
+                      account-id:
+                        type: string
+                        format: uuid
+                        title: Account Id
+                      created-by:
+                        type: string
+                        format: uuid
+                        title: Created By
+                      amount:
+                        type: string
+                        title: Amount
+                      asset:
+                        type: string
+                        title: Asset
+                      processed-at:
+                        type: string
+                        title: Processed At
+                      destination-wallet-address:
+                        type: string
+                        title: Destination Wallet Address
+                      tx-hash:
+                        type: string
+                        title: Tx Hash
+                    additionalProperties: false
+                    required:
+                    - withdraw-id
+                    - account-id
+                    - created-by
+                    - amount
+                    - asset
+                    - processed-at
+                  - type: object
+                    properties:
+                      amount:
+                        type: string
+                        title: Amount
+                      target-account-number:
+                        type: string
+                        title: Target Account Number
+                      withdraw-id:
+                        type: string
+                        format: uuid
+                        title: Withdraw Id
+                      target-legal-name:
+                        type: string
+                        title: Target Legal Name
+                      target-tax-id:
+                        type: string
+                        title: Target Tax Id
+                      target-branch-code:
+                        type: string
+                        title: Target Branch Code
+                      method:
+                        type: string
+                        enum:
+                        - ted
+                        - pix
+                        title: Method
+                      target-bank-code:
+                        type: string
+                        title: Target Bank Code
+                      account-id:
+                        type: string
+                        format: uuid
+                        title: Account Id
+                      processed-at:
+                        type: string
+                        title: Processed At
+                      created-by:
+                        type: string
+                        format: uuid
+                        title: Created By
+                      asset:
+                        type: string
+                        enum:
+                        - fiat/brl
+                        title: Asset
+                    additionalProperties: false
+                    required:
+                    - amount
+                    - target-account-number
+                    - withdraw-id
+                    - target-legal-name
+                    - target-tax-id
+                    - target-branch-code
+                    - method
+                    - target-bank-code
+                    - account-id
+                    - processed-at
+                    - created-by
+                    - asset
+              example:
+                event-id: 660e8400-e29b-41d4-a716-446655440013
+                event-type: withdraw-completed
+                payload:
+                  amount: '500.00'
+                  target-account-number: '54321'
+                  withdraw-id: 660e8400-e29b-41d4-a716-446655440007
+                  target-legal-name: Maria Santos
+                  target-tax-id: '98765432100'
+                  target-branch-code: '0001'
+                  method: pix
+                  target-bank-code: '12345678'
+                  account-id: 660e8400-e29b-41d4-a716-446655440001
+                  processed-at: '2024-01-15T10:45:00Z'
+                  created-by: 660e8400-e29b-41d4-a716-446655440003
+                  asset: fiat/brl
+            examples:
+              brl-pix:
+                summary: BRL PIX Withdrawal
+                value:
+                  event-id: 660e8400-e29b-41d4-a716-446655440013
+                  event-type: withdraw-completed
+                  payload:
+                    amount: '500.00'
+                    target-account-number: '54321'
+                    withdraw-id: 660e8400-e29b-41d4-a716-446655440007
+                    target-legal-name: Maria Santos
+                    target-tax-id: '98765432100'
+                    target-branch-code: '0001'
+                    method: pix
+                    target-bank-code: '12345678'
+                    account-id: 660e8400-e29b-41d4-a716-446655440001
+                    processed-at: '2024-01-15T10:45:00Z'
+                    created-by: 660e8400-e29b-41d4-a716-446655440003
+                    asset: fiat/brl
+              brl-ted:
+                summary: BRL TED Withdrawal
+                value:
+                  event-id: 660e8400-e29b-41d4-a716-446655440015
+                  event-type: withdraw-completed
+                  payload:
+                    amount: '1500.00'
+                    target-account-number: '98765'
+                    withdraw-id: 660e8400-e29b-41d4-a716-446655440009
+                    target-legal-name: João Silva
+                    target-tax-id: '12345678900'
+                    target-branch-code: '0001'
+                    method: ted
+                    target-bank-code: '341'
+                    account-id: 660e8400-e29b-41d4-a716-446655440001
+                    processed-at: '2024-01-15T11:00:00Z'
+                    created-by: 660e8400-e29b-41d4-a716-446655440003
+                    asset: fiat/brl
+              token-usdc:
+                summary: Token Withdrawal (USDC)
+                value:
+                  event-id: 770e8400-e29b-41d4-a716-446655440014
+                  event-type: withdraw-completed
+                  payload:
+                    withdraw-id: 770e8400-e29b-41d4-a716-446655440008
+                    account-id: 660e8400-e29b-41d4-a716-446655440001
+                    created-by: 660e8400-e29b-41d4-a716-446655440003
+                    amount: '100.500000000000000000'
+                    asset: eth-base/usdc
+                    destination-wallet-address: '0x69fE761eE92bdD3F37a1Be13820405Da9CfF23ef'
+                    tx-hash: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef'
+                    processed-at: '2024-01-15T10:45:00Z'
+      responses:
+        '200':
+          description: Webhook received successfully
+      tags:
+      - Crown API & Webhooks
+  claim-completed:
+    post:
+      summary: Claim Completed
+      description: Triggered when a yield claim has been successfully processed and tokens have been deposited.
+      operationId: claimCompleted
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - event-id
+              - event-type
+              - payload
+              properties:
+                event-id:
+                  type: string
+                  format: uuid
+                  description: Unique identifier for this webhook event
+                event-type:
+                  type: string
+                  enum:
+                  - claim-completed
+                payload:
+                  type: object
+                  properties:
+                    claim-id:
+                      type: string
+                      format: uuid
+                      title: Claim Id
+                    claim-tx-hash:
+                      type: string
+                      title: Claim Tx Hash
+                    deposit-tx-hash:
+                      type: string
+                      title: Deposit Tx Hash
+                    account-id:
+                      type: string
+                      format: uuid
+                      title: Account Id
+                    net-amount:
+                      type: string
+                      format: decimal
+                      title: Net Amount
+                    gross-amount:
+                      type: string
+                      format: decimal
+                      title: Gross Amount
+                    completed-at:
+                      type: string
+                      title: Completed At
+                    fees:
+                      type: string
+                      format: decimal
+                      title: Fees
+                    tax-amount:
+                      type: string
+                      format: decimal
+                      title: Tax Amount
+                  additionalProperties: false
+                  required:
+                  - claim-id
+                  - claim-tx-hash
+                  - deposit-tx-hash
+                  - account-id
+                  - net-amount
+                  - gross-amount
+                  - completed-at
+                  - fees
+                  - tax-amount
+              example:
+                event-id: 660e8400-e29b-41d4-a716-446655440014
+                event-type: claim-completed
+                payload:
+                  claim-id: 660e8400-e29b-41d4-a716-446655440008
+                  claim-tx-hash: 0xghi789...
+                  deposit-tx-hash: 0xjkl012...
+                  account-id: 660e8400-e29b-41d4-a716-446655440001
+                  net-amount: '840.00'
+                  gross-amount: '1000.00'
+                  completed-at: '2024-01-15T10:50:00Z'
+                  fees: '10.00'
+                  tax-amount: '150.00'
+      responses:
+        '200':
+          description: Webhook received successfully
+      tags:
+      - Crown API & Webhooks
+  account-approved:
+    post:
+      summary: Sub-account Approved
+      description: Triggered when a partner-initiated sub-account creation request clears compliance and the sub-account has been provisioned and activated. Fires on the parent (partner) account's subscriptions.
+      operationId: accountApproved
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - event-id
+              - event-type
+              - payload
+              properties:
+                event-id:
+                  type: string
+                  format: uuid
+                  description: Unique identifier for this webhook event
+                event-type:
+                  type: string
+                  enum:
+                  - account-approved
+                payload:
+                  type: object
+                  properties:
+                    subaccount-id:
+                      type: string
+                      format: uuid
+                      title: Subaccount Id
+                    status:
+                      type: string
+                      enum:
+                      - active
+                      title: Status
+                    completed-at:
+                      type: string
+                      title: Completed At
+                  additionalProperties: false
+                  required:
+                  - subaccount-id
+                  - status
+                  - completed-at
+              example:
+                event-id: 660e8400-e29b-41d4-a716-446655440015
+                event-type: account-approved
+                payload:
+                  subaccount-id: 660e8400-e29b-41d4-a716-446655440020
+                  status: active
+                  completed-at: '2024-01-15T10:55:00Z'
+      responses:
+        '200':
+          description: Webhook received successfully
+      tags:
+      - Crown API & Webhooks
+  account-rejected:
+    post:
+      summary: Sub-account Rejected
+      description: Triggered when a partner-initiated sub-account creation request is not approved (rejected, expired, or cancelled). The reason is intentionally opaque and never discloses sanctions/KYC details. Fires on the parent (partner) account's subscriptions.
+      operationId: accountRejected
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - event-id
+              - event-type
+              - payload
+              properties:
+                event-id:
+                  type: string
+                  format: uuid
+                  description: Unique identifier for this webhook event
+                event-type:
+                  type: string
+                  enum:
+                  - account-rejected
+                payload:
+                  type: object
+                  properties:
+                    subaccount-id:
+                      type: string
+                      format: uuid
+                      title: Subaccount Id
+                    status:
+                      type: string
+                      enum:
+                      - rejected
+                      title: Status
+                    reason:
+                      type: string
+                      enum:
+                      - compliance
+                      title: Reason
+                    rejected-at:
+                      type: string
+                      title: Rejected At
+                  additionalProperties: false
+                  required:
+                  - subaccount-id
+                  - status
+                  - reason
+                  - rejected-at
+              example:
+                event-id: 660e8400-e29b-41d4-a716-446655440016
+                event-type: account-rejected
+                payload:
+                  subaccount-id: 660e8400-e29b-41d4-a716-446655440021
+                  status: rejected
+                  reason: compliance
+                  rejected-at: '2024-01-15T11:05:00Z'
+      responses:
+        '200':
+          description: Webhook received successfully
+      tags:
+      - Crown API & Webhooks
+components:
+  securitySchemes:
+    JwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT-based authentication.
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Your account API Key
+    signature:
+      type: apiKey
+      in: header
+      name: X-Crown-Signature
+      description: HMAC-SHA256 signature of the request body using your webhook secret. Verify this signature to ensure the webhook is from Crown.
+x-webhook-security:
+  note: All webhook requests include an X-Crown-Signature header containing an HMAC-SHA256 signature of the request body. Use your webhook secret (provided when registering the webhook) to verify the signature and ensure the request is authentic.
+  algorithm: HMAC-SHA256
+  header: X-Crown-Signature
+  verification-steps:
+  - 1. Extract the X-Crown-Signature header from the request
+  - 2. Compute HMAC-SHA256 of the raw request body using your webhook secret
+  - 3. Compare the computed signature with the header value
+  - 4. Only process the webhook if signatures match
+  example-code:
+    node-js: "const crypto = require('crypto');\nconst signature = crypto.createHmac('sha256', webhookSecret)\n  .update(JSON.stringify(requestBody))\n  .digest('hex');\nconst isValid = signature === req.headers['x-crown-signature'];"
+    python: "import hmac\nimport hashlib\nimport json\n\nsignature = hmac.new(\n    webhook_secret.encode('utf-8'),\n    json.dumps(request_body).encode('utf-8'),\n    hashlib.sha256\n).hexdigest()\nis_valid = signature == request.headers['x-crown-signature']"

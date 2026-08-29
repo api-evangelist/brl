@@ -279,6 +279,16 @@ apis:
     url: https://docs.crown-brlv.com/guides/authentication
   - type: Webhooks
     url: https://docs.crown-brlv.com/guides/webhooks-setup
+- aid: brl:brl-crown-api-webhooks-api
+  name: BRL Crown API & Webhooks API
+  description: The Crown API & Webhooks API from BRL — 0 operation(s) for crown api & webhooks.
+  humanURL: https://docs.crown-brlv.com/
+  baseURL: https://app.crown-brlv.com
+  tags:
+  - Crown API & Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/brl-crown-api-webhooks-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
