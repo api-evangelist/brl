@@ -181,6 +181,8 @@ paths:
       description: Retrieves a list of reward certificate NFT transfers for the authenticated user.
       tags:
       - Nft Transfers
+      operationId: getApiV0NftTransfers
+      x-operation-id-source: derived
     post:
       requestBody:
         content:
@@ -371,6 +373,8 @@ paths:
       description: Transfers a reward certificate NFT from a source wallet to a target wallet. Source and target should be EVM wallet addresses (0x...).
       tags:
       - Nft Transfers
+      operationId: postApiV0NftTransfers
+      x-operation-id-source: derived
 components:
   securitySchemes:
     JwtAuth:

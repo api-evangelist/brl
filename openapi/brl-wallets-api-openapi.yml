@@ -140,6 +140,8 @@ paths:
       description: Returns the available balance that can be claimed from reward certificates held by the given wallet address.
       tags:
       - Wallets
+      operationId: getApiV0WalletsByWalletAddressClaims
+      x-operation-id-source: derived
     post:
       parameters:
       - in: path
@@ -337,6 +339,8 @@ paths:
       description: Submits a claim for a specified amount from reward certificates held by the given wallet address. FIFO allocation is restricted to certificates at this wallet.
       tags:
       - Wallets
+      operationId: postApiV0WalletsByWalletAddressClaims
+      x-operation-id-source: derived
   /api/v0/wallets:
     get:
       parameters:
@@ -541,6 +545,8 @@ paths:
       description: Returns a list of wallets. Can be filtered by assets and/or addresses.
       tags:
       - Wallets
+      operationId: getApiV0Wallets
+      x-operation-id-source: derived
     post:
       requestBody:
         content:
@@ -722,6 +728,8 @@ paths:
       description: Creates a new wallet with the specified name and default assets (BRLV and wBRLY if applicable).
       tags:
       - Wallets
+      operationId: postApiV0Wallets
+      x-operation-id-source: derived
   /api/v0/wallets/{wallet-id}/metadata:
     patch:
       parameters:
@@ -899,6 +907,8 @@ paths:
       description: Updates the metadata and/or UI visibility for a specific wallet owned by the authenticated user.
       tags:
       - Wallets
+      operationId: patchApiV0WalletsByWalletIdMetadata
+      x-operation-id-source: derived
   /api/v0/wallets/{wallet-address}/claims/certificates:
     get:
       parameters:
@@ -1056,6 +1066,8 @@ paths:
       description: Returns the reward certificates with their claimable amounts for the given wallet address.
       tags:
       - Wallets
+      operationId: getApiV0WalletsByWalletAddressClaimsCertificates
+      x-operation-id-source: derived
 components:
   securitySchemes:
     JwtAuth:

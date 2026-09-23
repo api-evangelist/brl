@@ -134,6 +134,8 @@ paths:
       description: Returns the total available balance that can be claimed
       tags:
       - Claims
+      operationId: getApiV0Claims
+      x-operation-id-source: derived
     post:
       requestBody:
         content:
@@ -325,6 +327,8 @@ paths:
       description: Submits a claim for a specified amount from reward certificates
       tags:
       - Claims
+      operationId: postApiV0Claims
+      x-operation-id-source: derived
   /api/v0/claims/certificates:
     get:
       responses:
@@ -476,6 +480,8 @@ paths:
       description: Returns a list of reward certificates with their claimable amounts
       tags:
       - Claims
+      operationId: getApiV0ClaimsCertificates
+      x-operation-id-source: derived
 components:
   securitySchemes:
     JwtAuth:

@@ -154,6 +154,8 @@ paths:
       description: 'Returns the current month''s tax exemption progress for Brazilian accounts. Shows the breakdown of disposals that count toward the R$35,000 monthly limit: resgates (claims) and outras alienações (burns and BRLV target-wallet transfers).'
       tags:
       - Tax Exemption
+      operationId: getApiV0TaxExemptionProgress
+      x-operation-id-source: derived
 components:
   securitySchemes:
     JwtAuth:

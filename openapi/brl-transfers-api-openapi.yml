@@ -251,6 +251,8 @@ paths:
       description: Retrieves a list of token transfers for the authenticated user. Can be filtered by source-address, target-address, asset, or state.
       tags:
       - Transfers
+      operationId: getApiV0Transfers
+      x-operation-id-source: derived
     post:
       requestBody:
         content:
@@ -484,6 +486,8 @@ paths:
       description: Transfer tokens from a source wallet to a target wallet. Both source and target should be EVM wallet addresses (0x...).
       tags:
       - Transfers
+      operationId: postApiV0Transfers
+      x-operation-id-source: derived
 components:
   securitySchemes:
     JwtAuth:

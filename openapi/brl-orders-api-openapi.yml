@@ -262,6 +262,8 @@ paths:
       description: Retrieves a list of all orders for the authenticated user
       tags:
       - Orders
+      operationId: getApiV0Orders
+      x-operation-id-source: derived
     post:
       requestBody:
         content:
@@ -549,6 +551,8 @@ paths:
       description: Creates an order by accepting a quote. Wallet addresses are required only for token assets (eth-base/brlv, eth-mainnet/brlv, eth-base/wbrly). For fiat assets (fiat/brl, fiat/usd), no wallet addresses are needed. Use source-wallet-address for the source wallet and target-wallet-address for the destination wallet.
       tags:
       - Orders
+      operationId: postApiV0Orders
+      x-operation-id-source: derived
   /api/v0/orders/{id}:
     get:
       parameters:
@@ -803,6 +807,8 @@ paths:
       description: Retrieves a specific order by its ID for the authenticated account
       tags:
       - Orders
+      operationId: getApiV0OrdersById
+      x-operation-id-source: derived
 components:
   securitySchemes:
     JwtAuth:

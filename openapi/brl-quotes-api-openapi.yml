@@ -435,6 +435,8 @@ paths:
       description: Creates a quote for converting between different assets (fiat currencies and tokens). Either source-amount OR target-amount must be provided, but not both.
       tags:
       - Quotes
+      operationId: postApiV0Quotes
+      x-operation-id-source: derived
 components:
   securitySchemes:
     JwtAuth:

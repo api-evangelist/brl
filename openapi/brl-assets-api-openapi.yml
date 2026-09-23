@@ -196,6 +196,8 @@ paths:
       description: 'DEPRECATED: Use /withdrawals/:id instead. Retrieves a specific BRL withdrawal by its ID for the authenticated account.'
       tags:
       - Assets
+      operationId: getApiV0AssetsByAssetWithdrawalsById
+      x-operation-id-source: derived
   /api/v0/assets/{asset}/withdrawals:
     get:
       parameters:
@@ -377,6 +379,8 @@ paths:
       description: 'DEPRECATED: Use /withdrawals instead. Retrieves a list of all BRL withdrawals for the authenticated user.'
       tags:
       - Assets
+      operationId: getApiV0AssetsByAssetWithdrawals
+      x-operation-id-source: derived
     post:
       parameters:
       - in: path
@@ -605,6 +609,8 @@ paths:
       description: 'DEPRECATED: Use /withdrawals instead. Creates a BRL withdrawal with PIX or TED methods. For PIX withdrawals, only a pix-key is required. For TED withdrawals, full bank account details are required.'
       tags:
       - Assets
+      operationId: postApiV0AssetsByAssetWithdrawals
+      x-operation-id-source: derived
   /api/v0/assets/{asset}/deposits:
     get:
       parameters:
@@ -1082,6 +1088,8 @@ paths:
       description: Retrieves a list of deposits for the authenticated user for a specific asset type. Asset can be 'brl', 'usd', 'usdc' or 'usdt'
       tags:
       - Assets
+      operationId: getApiV0AssetsByAssetDeposits
+      x-operation-id-source: derived
   /api/v0/assets/{asset}/balance:
     get:
       parameters:
@@ -1224,6 +1232,8 @@ paths:
       description: Retrieves the authenticated account's balance for a given asset. The balance is returned at the asset's decimal scale (brl=2, usdc=6, brlv=18).
       tags:
       - Assets
+      operationId: getApiV0AssetsByAssetBalance
+      x-operation-id-source: derived
 components:
   securitySchemes:
     JwtAuth:
