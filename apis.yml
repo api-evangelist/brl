@@ -67,6 +67,7 @@ tags:
 - Digital Assets
 - Wallets
 - Yield
+- Stablecoin Issuance
 tags_raw:
 - Company
 - Crypto
@@ -79,6 +80,7 @@ tags_raw:
 - Digital Assets
 - Wallets
 - Yield
+- Stablecoin Issuance
 image: https://raw.githubusercontent.com/api-evangelist/brl/refs/heads/main/apis.yml
 apis:
 - aid: brl:brl-accounts-api
