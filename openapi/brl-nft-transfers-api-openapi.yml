@@ -404,3 +404,9 @@ x-webhook-security:
   example-code:
     node-js: "const crypto = require('crypto');\nconst signature = crypto.createHmac('sha256', webhookSecret)\n  .update(JSON.stringify(requestBody))\n  .digest('hex');\nconst isValid = signature === req.headers['x-crown-signature'];"
     python: "import hmac\nimport hashlib\nimport json\n\nsignature = hmac.new(\n    webhook_secret.encode('utf-8'),\n    json.dumps(request_body).encode('utf-8'),\n    hashlib.sha256\n).hexdigest()\nis_valid = signature == request.headers['x-crown-signature']"
+x-provenance:
+  method: harvested
+  publisher: BRL
+  source: https://app.crown-brlv.com/api/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
