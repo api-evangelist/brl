@@ -64,6 +64,139 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-BRL is a company surfaced as a portfolio company of paradigm and added to the API Evangelist network as a stub for enrichment. Sector: crypto. This profile is a lead awaiting the enrichment pipeline.
+Crown (brl.xyz) is a Brazilian fintech, backed by Paradigm, Coinbase Ventures and Paxos, that issues BRLV — a stablecoin pegged 1:1 to the Brazilian Real and backed by Brazilian federal government bonds held in a bankruptcy-remote structure under temporary authorization from the Banco Central do Brasil. The Crown API lets partners create known-taxpayer accounts and sub-accounts, provision wallets, fund balances via PIX and TED, request quotes and place conversion orders across fiat (BRL/USD) and tokens (BRLV, wBRLY, USDC, USDT on Base and Ethereum mainnet), move tokens on-chain, claim accumulated yield from reward certificates (including recurring auto-claims and NFT reward-certificate transfers), withdraw via PIX/TED or token, track Brazilian monthly tax-exemption progress, and subscribe to webhooks for deposit, order, transfer, withdrawal, claim and sub-account approval events. Authentication pairs an X-API-Key identifier with a short-lived (<50s) self-signed RS256 JWT that binds each request's URI, nonce and SHA-256 body hash.
 
-Backed by: paradigm — https://brl.xyz
+**Areas:** Company · Cryptocurrency · Stablecoins · Payments · Brazil · Pix · Fintech · Blockchain · Digital Assets · Wallets · Yield · Stablecoin Issuance
+
+## BRL on APIs.io
+
+Everything profiled for BRL is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/brl/](https://apis.io/providers/brl/)** — or go straight to one of the APIs or properties below.
+
+### APIs (11)
+
+- [BRL Accounts API](https://apis.io/apis/brl/brl-accounts-api/) — The Accounts API from BRL — 27 operation(s) for accounts.
+- [BRL Assets API](https://apis.io/apis/brl/brl-assets-api/) — The Assets API from BRL — 4 operation(s) for assets.
+- [BRL Claims API](https://apis.io/apis/brl/brl-claims-api/) — The Claims API from BRL — 2 operation(s) for claims.
+- [BRL Nft Transfers API](https://apis.io/apis/brl/brl-nft-transfers-api/) — The Nft Transfers API from BRL — 1 operation(s) for nft transfers.
+- [BRL Orders API](https://apis.io/apis/brl/brl-orders-api/) — The Orders API from BRL — 2 operation(s) for orders.
+- [BRL Quotes API](https://apis.io/apis/brl/brl-quotes-api/) — The Quotes API from BRL — 1 operation(s) for quotes.
+- [BRL Tax Exemption API](https://apis.io/apis/brl/brl-tax-exemption-api/) — The Tax Exemption API from BRL — 1 operation(s) for tax exemption.
+- [BRL Transfers API](https://apis.io/apis/brl/brl-transfers-api/) — The Transfers API from BRL — 1 operation(s) for transfers.
+- [BRL Wallets API](https://apis.io/apis/brl/brl-wallets-api/) — The Wallets API from BRL — 4 operation(s) for wallets.
+- [BRL Withdrawals API](https://apis.io/apis/brl/brl-withdrawals-api/) — The Withdrawals API from BRL — 2 operation(s) for withdrawals.
+- [BRL Crown API & Webhooks API](https://apis.io/apis/brl/brl-crown-api-webhooks-api/) — The Crown API & Webhooks API from BRL — 0 operation(s) for crown api & webhooks.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Brl Webhooks](https://apis.io/asyncapis/brl/brl-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [crown](https://apis.io/servers/brl/crown/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Brl Agentic Access](https://apis.io/agentic-access/brl/brl-agentic-access/)
+
+#### Collections (10)
+
+Postman and Open Collection request collections.
+
+- [Crown API & Webhooks Accounts API](https://apis.io/collections/brl/open-brl-accounts-api/)
+- [Crown API & Webhooks Accounts Assets API](https://apis.io/collections/brl/open-brl-assets-api/)
+- [Crown API & Webhooks Accounts Claims API](https://apis.io/collections/brl/open-brl-claims-api/)
+- [Crown API & Webhooks Accounts Nft Transfers API](https://apis.io/collections/brl/open-brl-nft-transfers-api/)
+- [Crown API & Webhooks Accounts Orders API](https://apis.io/collections/brl/open-brl-orders-api/)
+- [Crown API & Webhooks Accounts Quotes API](https://apis.io/collections/brl/open-brl-quotes-api/)
+- [Crown API & Webhooks Accounts Tax Exemption API](https://apis.io/collections/brl/open-brl-tax-exemption-api/)
+- [Crown API & Webhooks Accounts Transfers API](https://apis.io/collections/brl/open-brl-transfers-api/)
+- [Crown API & Webhooks Accounts Wallets API](https://apis.io/collections/brl/open-brl-wallets-api/)
+- [Crown API & Webhooks Accounts Withdrawals API](https://apis.io/collections/brl/open-brl-withdrawals-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Brl Openapi Overlay](https://apis.io/overlays/brl/brl-openapi-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Brl Authentication](https://apis.io/security/brl/brl-authentication/)
+- [Brl Domain Security](https://apis.io/security/brl/brl-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://brl.xyz)
+- [Documentation](https://docs.crown-brlv.com/)
+- [Getting started](https://docs.crown-brlv.com/guides/api-keys-setup)
+- [API reference](https://docs.crown-brlv.com/api-reference/introduction)
+- [Sign up](https://onboarding.crown-brlv.com/start)
+- [Blog](https://www.crown-brlv.com/blog/)
+- [Privacy policy](https://d2bv8dtly8iz1m.cloudfront.net/crown/Crown_PT_Termo_de_Privacidade_27a36188f2.pdf)
+
+## API Evangelist rating
+
+**Kin Score 37.0** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 55.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 52.4 |
+| Access clarity | 23.7 |
+
+**Agent readiness 29.1** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 18.8** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/brl/](https://apis.io/providers/brl/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for BRL: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/brl/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
